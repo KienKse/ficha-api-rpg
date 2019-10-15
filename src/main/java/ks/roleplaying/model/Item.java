@@ -19,16 +19,32 @@ public class Item {
     @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "PESO", nullable = false, precision=4, scale=2)
+    @Column(name = "PESO", nullable = false)
     private BigDecimal peso;
 
-    @Column(name = "PRECO")
+    @Column(name = "PRECO", nullable = false)
     private BigDecimal preco;
+
+    @Column(name = "QUANTIDADE", nullable = false)
+    private Integer quantidade;
+
+    public Item() {
+        //EMPTY
+    }
 
     public Item(Item request) {
         this.nome = request.nome;
         this.peso= request.peso;
         this.preco = request.preco;
+        this.quantidade = request.quantidade;
+
+    }
+
+    public Item(String nome, BigDecimal peso, BigDecimal preco, Integer quantidade) {
+        this.nome = nome;
+        this.peso = peso;
+        this.preco = preco;
+        this.quantidade = quantidade;
     }
 
     public Long getId() {
@@ -55,11 +71,31 @@ public class Item {
         this.peso = peso;
     }
 
+    public BigDecimal getPesoIndividual() {
+        return peso;
+    }
+
+    public BigDecimal getPesoTotal() {
+        return peso.multiply(BigDecimal.valueOf(quantidade));
+    }
+
+    public void setPesoIndividual(BigDecimal peso) {
+        this.peso = peso;
+    }
+
     public BigDecimal getPreco() {
         return preco;
     }
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
+    }
+                                            
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
     }
 }

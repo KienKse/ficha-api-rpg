@@ -4,7 +4,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -18,20 +18,67 @@ public class Inventario implements Serializable {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-//    @OneToOne
-//    @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
-//    private Personagem personagem;
-
-    @Column(name = "PESO_TOTAL", nullable = false, precision=4, scale=2)
-    private BigDecimal pesoTotal;
-
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "inventario")
-//    private List<Item> items;
-
     @ManyToMany
     @JoinTable(name="inventario_item", joinColumns=
             {@JoinColumn(name="ID_INVENTARIO")}, inverseJoinColumns=
             {@JoinColumn(name="ID_ITEM")})
     private List<Item> itens;
+
+    public void addItem(Item item) {
+        if(itens == null) {
+            this.itens = new ArrayList<>();
+        } else {
+            Item itemExistente = itens.stream()
+                    .filter(itemLista -> item.getNome().equals(itemLista.getNome()))
+                    .findAny()
+                    .orElse(null);
+            if(itemExistente == null) {
+                this.itens.add(item);
+            } else {
+                itemExistente.setQuantidade(itemExistente.getQuantidade()+1);
+            }
+        }
+    }
+
+    public Item getItemByName(String nome) {
+        return itens.stream()
+                .filter(item -> nome.equals(item.getNome()))
+                .findAny()
+                .orElse(null);
+    }
+
+    public void removeItem(Item item) {
+        try {
+            Item itemExistente = itens.stream()
+                    .filter(itemLista -> item.getNome().equals(itemLista.getNome()))
+                    .findAny()
+                    .orElse(null);
+            if(itemExistente.getQuantidade()-1 == 0) {
+                itens.remove(item);
+            } else {
+                itemExistente.setQuantidade(itemExistente.getQuantidade()-1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void removeItemByName(String nome) {
+        try {
+            Item itemExistente = itens.stream()
+                    .filter(itemLista -> nome.equals(itemLista.getNome()))
+                    .findAny()
+                    .orElse(null);
+            if(itemExistente.getQuantidade()-1 == 0) {
+                itens.remove(itemExistente);
+            } else {
+                itemExistente.setQuantidade(itemExistente.getQuantidade()-1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
 }

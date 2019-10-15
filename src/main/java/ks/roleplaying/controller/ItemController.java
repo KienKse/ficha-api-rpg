@@ -2,7 +2,6 @@ package ks.roleplaying.controller;
 
 import ks.roleplaying.model.Item;
 import ks.roleplaying.service.ItemService;
-import ks.roleplaying.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +25,26 @@ public class ItemController {
     }
 
     /*
-
-    
+[
+    {
+	    "nome": "Adaga da Morte",
+	    "peso": 1.2,
+	    "preco": 500,
+	    "quantidade": 1
+    },
+    {
+	    "nome": "Poção da Vida",
+	    "peso": 0.2,
+	    "preco": 70,
+	    "quantidade": 1
+    },
+    {
+        "nome": "Poção da Mana",
+        "peso": 0.50,
+        "preco": 100,
+        "quantidade": 1
+    }
+]
 
      */
 
@@ -41,11 +58,31 @@ public class ItemController {
         }
     }
 
+    // AddAll Item
+    @PostMapping("/addList")
+    public void addListItens(@Valid @RequestBody List<Item> itens) {
+            itens.forEach(this::adicionarItens);
+    }
+
+    private void adicionarItens(Item item) {
+        try {
+             this.itemService.addNewItem(item);
+        } catch (Exception e) {
+            System.out.println("Exceção: " + e.getLocalizedMessage());
+        }
+    }
+
     // Get - Item
     @GetMapping("/{id}")
     public @ResponseBody
     Item getItemById(@PathVariable(value = "id") Long carId) {
         return itemService.getItemById(carId);
+    }
+
+    //TODO: VERIFY
+//     Get - Item - ByName
+    public List<Item> getItemByNome(String nome) {
+        return itemService.getItemByName(nome);
     }
 
     // Delete - Item

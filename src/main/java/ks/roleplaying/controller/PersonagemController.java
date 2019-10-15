@@ -2,9 +2,10 @@ package ks.roleplaying.controller;
 
 import ks.roleplaying.model.Personagem;
 import ks.roleplaying.service.PersonagemService;
-import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -37,6 +38,7 @@ public class PersonagemController {
 
     // Add Personagem
     @PostMapping("/add")
+    @Transactional
     public ResponseEntity addNewPersonagem(@Valid @RequestBody Personagem request) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(personagemService.addNewPersonagem(request));

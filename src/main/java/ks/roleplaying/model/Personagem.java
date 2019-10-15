@@ -4,6 +4,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -38,6 +39,10 @@ public class Personagem implements Serializable {
 
     @Column(name = "CLASSE", nullable = false, length = 45)
     private String classe;
+
+    //TODO: DEFINIR CARGA / PESO TOTAL
+//    @Column(name = "PESO_TOTAL", nullable = false, precision=4, scale=2)
+//    private BigDecimal pesoTotal;
 
     @OneToOne
     @JoinColumn(name = "ID_INVENTARIO_FK", referencedColumnName = "ID")
@@ -103,5 +108,29 @@ public class Personagem implements Serializable {
 
     public void setClasse(String classe) {
         this.classe = classe;
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public void setInventario(Inventario inventario) {
+        this.inventario = inventario;
+    }
+
+    public Atributos getAtributos() {
+        return atributos;
+    }
+
+    public void setAtributos(Atributos atributos) {
+        this.atributos = atributos;
+    }
+
+    public List<Habilidade> getHabilidades() {
+        return habilidades;
+    }
+
+    public void setHabilidades(List<Habilidade> habilidades) {
+        this.habilidades = habilidades;
     }
 }

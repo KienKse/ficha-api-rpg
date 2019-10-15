@@ -26,9 +26,24 @@ public class HabilidadeController {
 
     /*
 
-    
+[
+	{
+	    "nome": "Bola de Fogo",
+	    "custo": "12",
+	    "descricao": "O próprio nome já diz tudo"
+    },
+    {
+	    "nome": "Furia",
+	    "descricao": "O portador entra em estado de fúria completa adicionado 3d6 + modificador de força ao seu dano final"
+    },
+    {
+	    "nome": "Cura",
+	    "custo": "4",
+	    "descricao": "O alvo é curado com 1d6"
+    }
+]
 
-     */
+    */
 
     // Add Habilidade
     @PostMapping("/add")
@@ -37,6 +52,20 @@ public class HabilidadeController {
             return ResponseEntity.status(HttpStatus.OK).body(habilidadeService.addNewHabilidade(request));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    // AddAll Habilidade
+    @PostMapping("/addList")
+    public void addListHabilidade(@RequestBody List<Habilidade> habilidades) {
+        habilidades.forEach(this::adicionarHabilidade);
+    }
+
+    private void adicionarHabilidade(Habilidade habilidade) {
+        try {
+            this.habilidadeService.addNewHabilidade(habilidade);
+        } catch (Exception e) {
+            System.out.println("Exceção: " + e.getLocalizedMessage());
         }
     }
 

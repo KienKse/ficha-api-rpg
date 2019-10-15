@@ -25,6 +25,10 @@ public class Habilidade {
     @Column(name = "DESCRICAO", nullable = false)
     private String descricao;
 
+    public Habilidade() {
+        //EMPTY
+    }
+
     public Habilidade(Habilidade request) {
         this.nome = request.nome;
         this.custo = request.custo;

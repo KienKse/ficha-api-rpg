@@ -37,6 +37,10 @@ public class ItemService {
                 .orElseThrow(() -> new ResourceNotFoundException("ITEM", "id", itemId));
     }
 
+    public List<Item> getItemByName(String nome) {
+        return itemRepository.findByNome(nome);
+    }
+
     public void deleteItem(Long itemId) {
         Item item = getItemById(itemId);
 
@@ -57,7 +61,5 @@ public class ItemService {
 
         return ResponseEntity.noContent().build();
     }
-
-
 
 }
