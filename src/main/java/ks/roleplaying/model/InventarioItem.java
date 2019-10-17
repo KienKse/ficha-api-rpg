@@ -8,22 +8,57 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Table(name = "INVENTARIO", schema = "rpg")
-@Table(name = "INVENTARIO")
+@Table(name = "INVENTARIO_ITEM", schema = "rpg")
+//@Table(name = "INVENTARIO")
 @EntityListeners(AuditingEntityListener.class)
-public class Inventario implements Serializable {
+public class InventarioItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @ManyToMany
-    @JoinTable(name="inventario_item", joinColumns=
-            {@JoinColumn(name="ID_INVENTARIO")}, inverseJoinColumns=
-            {@JoinColumn(name="ID_ITEM")})
-    private List<Item> itens;
+    @OneToOne
+    @JoinColumn(name = "ID_ITEM_FK", referencedColumnName = "ID", nullable = false)
+    private Item item;
 
+    @Column(name = "quantidade", nullable = false)
+    private Integer quantidade;
+
+    public InventarioItem(Item item, Integer quantidade) {
+        this.item = item;
+        this.quantidade = quantidade;
+    }
+
+    public InventarioItem() {
+        //EMPTY
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
+    public Integer getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(Integer quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    /*
     public void addItem(Item item) {
         if(itens == null) {
             this.itens = new ArrayList<>();
@@ -32,11 +67,7 @@ public class Inventario implements Serializable {
                     .filter(itemLista -> item.getNome().equals(itemLista.getNome()))
                     .findAny()
                     .orElse(null);
-            if(itemExistente == null) {
-                this.itens.add(item);
-            } else {
-                itemExistente.setQuantidade(itemExistente.getQuantidade()+1);
-            }
+            this.itens.add(item);
         }
     }
 
@@ -53,11 +84,7 @@ public class Inventario implements Serializable {
                     .filter(itemLista -> item.getNome().equals(itemLista.getNome()))
                     .findAny()
                     .orElse(null);
-            if(itemExistente.getQuantidade()-1 == 0) {
-                itens.remove(item);
-            } else {
-                itemExistente.setQuantidade(itemExistente.getQuantidade()-1);
-            }
+            itens.remove(item);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -69,16 +96,12 @@ public class Inventario implements Serializable {
                     .filter(itemLista -> nome.equals(itemLista.getNome()))
                     .findAny()
                     .orElse(null);
-            if(itemExistente.getQuantidade()-1 == 0) {
-                itens.remove(itemExistente);
-            } else {
-                itemExistente.setQuantidade(itemExistente.getQuantidade()-1);
-            }
+            itens.remove(itemExistente);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
+*/
 
 
 }

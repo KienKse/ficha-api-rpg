@@ -4,23 +4,16 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Table(name = "PERSONAGEM", schema = "rpg")
-@Table(name = "PERSONAGEM")
+@Table(name = "PERSONAGEM", schema = "rpg")
+//@Table(name = "PERSONAGEM")
 @EntityListeners(AuditingEntityListener.class)
 public class Personagem implements Serializable {
     /**
      * Ícaro Santana
-     */
-
-    /*
-        2 - RESISTÊNCIAS
-        Fort
-        Ref
-        Von
      */
 
     @Id
@@ -40,13 +33,14 @@ public class Personagem implements Serializable {
     @Column(name = "CLASSE", nullable = false, length = 45)
     private String classe;
 
-    //TODO: DEFINIR CARGA / PESO TOTAL
+    //TODO: DEFINIR PESO TOTAL
 //    @Column(name = "PESO_TOTAL", nullable = false, precision=4, scale=2)
 //    private BigDecimal pesoTotal;
 
-    @OneToOne
-    @JoinColumn(name = "ID_INVENTARIO_FK", referencedColumnName = "ID")
-    private Inventario inventario;
+//    @OneToOne
+    @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
+    @OneToMany
+    private List<InventarioItem> inventarioItens;
 
     @OneToOne
     @JoinColumn(name = "ID_ATRIBUTO_FK", referencedColumnName = "ID")
@@ -67,6 +61,8 @@ public class Personagem implements Serializable {
         this.nivel = request.nivel;
         this.raca = request.raca;
         this.classe = request.classe;
+        this.atributos = request.atributos;
+        this.habilidades = request.habilidades;
     }
 
     public Long getId() {
@@ -89,7 +85,6 @@ public class Personagem implements Serializable {
         return nivel;
     }
 
-
     public void setNivel(Integer nivel) {
         this.nivel = nivel;
     }
@@ -110,14 +105,6 @@ public class Personagem implements Serializable {
         this.classe = classe;
     }
 
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setInventario(Inventario inventario) {
-        this.inventario = inventario;
-    }
-
     public Atributos getAtributos() {
         return atributos;
     }
@@ -132,5 +119,16 @@ public class Personagem implements Serializable {
 
     public void setHabilidades(List<Habilidade> habilidades) {
         this.habilidades = habilidades;
+    }
+
+    public List<InventarioItem> getInventarioItens() {
+        if(inventarioItens == null) {
+            inventarioItens = new ArrayList<>();
+        }
+        return inventarioItens;
+    }
+
+    public void setInventarioItens(List<InventarioItem> inventarioItens) {
+        this.inventarioItens = inventarioItens;
     }
 }

@@ -1,13 +1,11 @@
 package ks.roleplaying.service;
 
 import ks.roleplaying.model.Atributos;
-import ks.roleplaying.model.Inventario;
+import ks.roleplaying.model.InventarioItem;
 import ks.roleplaying.model.Item;
 import ks.roleplaying.model.Personagem;
 import ks.roleplaying.repository.AtributosRepository;
-import ks.roleplaying.repository.HabilidadeRepository;
 import ks.roleplaying.repository.InventarioRepository;
-import org.springframework.transaction.annotation.Transactional;
 import ks.roleplaying.repository.PersonagemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,8 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ks.roleplaying.controller.ResourceNotFoundException;
 
-import java.math.BigDecimal;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +25,15 @@ public class PersonagemService {
     @Autowired
     private PersonagemRepository personagemRepository;
 
+    //TODO: CRIAR SERVICES DOS REPO ABAIXO
     @Autowired
     private InventarioRepository inventarioRepository;
 
     @Autowired
     private AtributosRepository atributosRepository;
+
+    @Autowired
+    private ItemService itemService;
 
     public List<Personagem> getAll() {
         LOGGER.debug("Obtendo personagens");
@@ -43,14 +43,20 @@ public class PersonagemService {
     public Personagem addNewPersonagem(Personagem request) {
         Personagem personagem = new Personagem(request);
 
-        Inventario inventario = new Inventario();
-        inventarioRepository.save(inventario);
+        //TODO: REMOVER TESTES FIXOS
+        Item padrao = itemService.getItemById(1L);
+        Item padrao2 = itemService.getItemById(2L);
 
-        //TODO: ADICIONAR ITEM TESTE
-        personagem.setInventario(inventario);
-//        String nome, BigDecimal peso, BigDecimal preco, Integer quantidade
-        Item gold = new Item("dinheiro", BigDecimal.ONE, BigDecimal.ONE, 100);
+        personagemRepository.save(personagem);
 
+        InventarioItem inventarioItem = new InventarioItem(padrao, 2);
+        InventarioItem inventarioItem2 = new InventarioItem(padrao2, 1);
+
+        inventarioRepository.save(inventarioItem);
+        inventarioRepository.save(inventarioItem2);
+
+        personagem.getInventarioItens().add(inventarioItem);
+        personagem.getInventarioItens().add(inventarioItem2);
 
         //TODO: DEFINIR ATRIBUTOS
         Atributos atributos = new Atributos(10, 10, 10, 10, 10, 10);
@@ -60,9 +66,6 @@ public class PersonagemService {
         personagem.setAtributos(atributos);
 
         //TODO: VERIFICAR INSERT EM HABILIDADE - ManyToMany Chave em relação a habilidades existentes ?? CONTINUAR ASSIM??
-        //TODO: VERIFICAR INSERT EM ITEM NO INVENTARIO - ManyToMany Chave em relação a habilidades existentes
-
-
         return personagemRepository.save(personagem);
     }
 
