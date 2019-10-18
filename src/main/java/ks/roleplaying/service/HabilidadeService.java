@@ -31,6 +31,10 @@ public class HabilidadeService {
         return habilidadeRepository.save(habilidade);
     }
 
+    public Habilidade addNewHabilidadeCarga(String nome, Integer custo, String descricao) {
+        return habilidadeRepository.save(new Habilidade(nome, custo, descricao));
+    }
+
     public Habilidade getHabilidadeById(Long habilidadeId) {
         return habilidadeRepository.findById(habilidadeId)
                 .orElseThrow(() -> new ResourceNotFoundException("HABILIDADE", "id", habilidadeId));
@@ -42,7 +46,6 @@ public class HabilidadeService {
         habilidadeRepository.delete(habilidade);
     }
 
-    // TODO: UPDATE
     public ResponseEntity<Object> updateHabilidade(Habilidade habilidadeDetails, Long habilidadeId) {
         Optional<Habilidade> habilidadeOptional = habilidadeRepository.findById(habilidadeId);
 

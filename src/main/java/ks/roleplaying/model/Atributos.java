@@ -46,15 +46,6 @@ public class Atributos {
         this.vontade = vontade;
     }
 
-//    public Atributos(Atributos request) {
-//        this.forca = request.forca;
-//        this.destreza = request.destreza;
-//        this.constituicao = request.constituicao;
-//        this.inteligencia = request.inteligencia;
-//        this.sabedoria = request.sabedoria;
-//        this.vontade = request.vontade;
-//    }
-
     public Long getId() {
         return id;
     }

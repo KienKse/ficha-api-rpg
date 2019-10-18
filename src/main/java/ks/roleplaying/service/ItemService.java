@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +33,10 @@ public class ItemService {
         return itemRepository.save(item);
     }
 
+    public Item addNewItemCarga(String nome, BigDecimal peso, BigDecimal preco) {
+        return itemRepository.save(new Item(nome, peso, preco));
+    }
+
     public Item getItemById(Long itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("ITEM", "id", itemId));
@@ -47,7 +52,6 @@ public class ItemService {
         itemRepository.delete(item);
     }
 
-    // TODO: UPDATE
     public ResponseEntity<Object> updateItem(Item itemDetails, Long itemId) {
         Optional<Item> itemOptional = itemRepository.findById(itemId);
 

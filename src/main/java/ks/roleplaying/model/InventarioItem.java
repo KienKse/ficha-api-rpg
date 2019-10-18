@@ -4,12 +4,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "INVENTARIO_ITEM", schema = "rpg")
-//@Table(name = "INVENTARIO")
+//@Table(name = "INVENTARIO_ITEM")
 @EntityListeners(AuditingEntityListener.class)
 public class InventarioItem implements Serializable {
 

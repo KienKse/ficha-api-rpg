@@ -79,7 +79,6 @@ public class ItemController {
         return itemService.getItemById(carId);
     }
 
-    //TODO: VERIFY
 //     Get - Item - ByName
     public List<Item> getItemByNome(String nome) {
         return itemService.getItemByName(nome);

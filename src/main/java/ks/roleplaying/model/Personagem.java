@@ -33,11 +33,9 @@ public class Personagem implements Serializable {
     @Column(name = "CLASSE", nullable = false, length = 45)
     private String classe;
 
-    //TODO: DEFINIR PESO TOTAL
 //    @Column(name = "PESO_TOTAL", nullable = false, precision=4, scale=2)
 //    private BigDecimal pesoTotal;
 
-//    @OneToOne
     @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
     @OneToMany
     private List<InventarioItem> inventarioItens;
@@ -114,6 +112,9 @@ public class Personagem implements Serializable {
     }
 
     public List<Habilidade> getHabilidades() {
+        if(habilidades == null) {
+            habilidades = new ArrayList<>();
+        }
         return habilidades;
     }
 

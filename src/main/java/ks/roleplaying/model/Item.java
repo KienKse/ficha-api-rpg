@@ -29,16 +29,16 @@ public class Item {
         //EMPTY
     }
 
-    public Item(Item request) {
-        this.nome = request.nome;
-        this.peso= request.peso;
-        this.preco = request.preco;
-    }
-
     public Item(String nome, BigDecimal peso, BigDecimal preco) {
         this.nome = nome;
         this.peso = peso;
         this.preco = preco;
+    }
+
+    public Item(Item request) {
+        this.nome = request.nome;
+        this.peso= request.peso;
+        this.preco = request.preco;
     }
 
     public Long getId() {

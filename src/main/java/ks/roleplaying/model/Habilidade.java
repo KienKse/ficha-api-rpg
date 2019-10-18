@@ -35,6 +35,12 @@ public class Habilidade {
         this.descricao = request.descricao;
     }
 
+    public Habilidade(String nome, Integer custo, String descricao) {
+        this.nome = nome;
+        this.custo = custo;
+        this.descricao = descricao;
+    }
+
     public Long getId() {
         return id;
     }
