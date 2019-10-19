@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "HABILIDADE", schema = "rpg")
-//@Table(name = "HABILIDADE")
+//@Table(name = "HABILIDADE", schema = "rpg")
+@Table(name = "HABILIDADE")
 @EntityListeners(AuditingEntityListener.class)
 public class Habilidade {
 

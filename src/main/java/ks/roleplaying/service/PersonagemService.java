@@ -1,9 +1,11 @@
 package ks.roleplaying.service;
 
+import ks.roleplaying.enums.TendenciaEnum;
 import ks.roleplaying.model.*;
 import ks.roleplaying.repository.AtributosRepository;
 import ks.roleplaying.repository.InventarioRepository;
 import ks.roleplaying.repository.PersonagemRepository;
+import ks.roleplaying.repository.TendenciaRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class PersonagemService {
     private AtributosRepository atributosRepository;
 
     @Autowired
+    private TendenciaRepository tendenciaRepository;
+
+    @Autowired
     private HabilidadeService habilidadeService;
 
     @Autowired
@@ -42,6 +47,11 @@ public class PersonagemService {
 
     public Personagem addNewPersonagem(Personagem request) {
         Personagem personagem = new Personagem(request);
+
+        Tendencia tendencia = new Tendencia(TendenciaEnum.NB);
+        tendenciaRepository.save(tendencia);
+
+        personagem.setTendencia(tendencia);
 
 //        Item padrao = itemService.getItemById(1L);
 //        Item padrao2 = itemService.getItemById(2L);

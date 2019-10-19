@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "INVENTARIO_ITEM", schema = "rpg")
-//@Table(name = "INVENTARIO_ITEM")
+//@Table(name = "INVENTARIO_ITEM", schema = "rpg")
+@Table(name = "INVENTARIO_ITEM")
 @EntityListeners(AuditingEntityListener.class)
 public class InventarioItem implements Serializable {
 

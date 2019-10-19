@@ -1,4 +1,4 @@
-######. TODO
+> TODO
 ___
 1. ITEM / HABILIDADE
     * [ ] Criar JSON/Entity Padrão Generico p/ Popular
@@ -13,6 +13,7 @@ ___
 3. PERSONAGEM
     * [ ] Remover exemplos fixos (*Item, Habilidade, atributos*)
     * [ ] Definir peso total
+    * [x] Tendencia
 ___  
 
 + [ ] Verificar Updates `/upd/{id}`

@@ -4,12 +4,13 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "PERSONAGEM", schema = "rpg")
-//@Table(name = "PERSONAGEM")
+//@Table(name = "PERSONAGEM", schema = "rpg")
+@Table(name = "PERSONAGEM")
 @EntityListeners(AuditingEntityListener.class)
 public class Personagem implements Serializable {
     /**
@@ -33,8 +34,13 @@ public class Personagem implements Serializable {
     @Column(name = "CLASSE", nullable = false, length = 45)
     private String classe;
 
-//    @Column(name = "PESO_TOTAL", nullable = false, precision=4, scale=2)
-//    private BigDecimal pesoTotal;
+//    @Column(name = "ID", nullable = false, length = 45)
+    @JoinColumn(name = "ID_TENDENCIA_FK", referencedColumnName = "ID")
+    @ManyToOne
+    private Tendencia tendencia;
+
+    @Transient
+    private BigDecimal pesoTotal;
 
     @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
     @OneToMany
@@ -61,6 +67,10 @@ public class Personagem implements Serializable {
         this.classe = request.classe;
         this.atributos = request.atributos;
         this.habilidades = request.habilidades;
+    }
+
+    public BigDecimal getPesoTotal() {
+        return BigDecimal.valueOf(atributos.getForca() * 3);
     }
 
     public Long getId() {
@@ -116,6 +126,14 @@ public class Personagem implements Serializable {
             habilidades = new ArrayList<>();
         }
         return habilidades;
+    }
+
+    public Tendencia getTendencia() {
+        return tendencia;
+    }
+
+    public void setTendencia(Tendencia tendencia) {
+        this.tendencia = tendencia;
     }
 
     public void setHabilidades(List<Habilidade> habilidades) {

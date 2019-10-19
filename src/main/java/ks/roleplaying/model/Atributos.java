@@ -5,8 +5,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ATRIBUTOS", schema = "rpg")
-//@Table(name = "ATRIBUTOS")
+//@Table(name = "ATRIBUTOS", schema = "rpg")
+@Table(name = "ATRIBUTOS")
 @EntityListeners(AuditingEntityListener.class)
 public class Atributos {
 
@@ -30,20 +30,20 @@ public class Atributos {
     @Column(name = "ATT_SAB", nullable = false)
     private Integer sabedoria;
 
-    @Column(name = "ATT_VON", nullable = false)
-    private Integer vontade;
+    @Column(name = "ATT_CAR", nullable = false)
+    private Integer carisma;
 
     public Atributos() {
         //Empty
     }
 
-    public Atributos(Integer forca, Integer destreza, Integer constituicao, Integer inteligencia, Integer sabedoria, Integer vontade) {
+    public Atributos(Integer forca, Integer destreza, Integer constituicao, Integer inteligencia, Integer sabedoria, Integer carisma) {
         this.forca = forca;
         this.destreza = destreza;
         this.constituicao = constituicao;
         this.inteligencia = inteligencia;
         this.sabedoria = sabedoria;
-        this.vontade = vontade;
+        this.carisma = carisma;
     }
 
     public Long getId() {
@@ -94,11 +94,11 @@ public class Atributos {
         this.sabedoria = sabedoria;
     }
 
-    public Integer getVontade() {
-        return vontade;
+    public Integer getCarisma() {
+        return carisma;
     }
 
-    public void setVontade(Integer vontade) {
-        this.vontade = vontade;
+    public void setCarisma(Integer carisma) {
+        this.carisma = carisma;
     }
 }
