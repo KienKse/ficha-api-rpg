@@ -20,7 +20,7 @@ public class PersonagemController {
     private PersonagemService personagemService;
 
     // Get ALL - Personagem
-    @GetMapping("/all")
+    @GetMapping("")
     public List<Personagem> getAll() {
         return personagemService.getAll();
     }
@@ -50,8 +50,8 @@ public class PersonagemController {
     // Get - Personagem
     @GetMapping("/{id}")
     public @ResponseBody
-    Personagem getPersonagemById(@PathVariable(value = "id") Long carId) {
-        return personagemService.getPersonagemById(carId);
+    Personagem getPersonagemById(@PathVariable(value = "id") Long personagemId) {
+        return personagemService.getPersonagemById(personagemId);
     }
 
     // Delete - Personagem

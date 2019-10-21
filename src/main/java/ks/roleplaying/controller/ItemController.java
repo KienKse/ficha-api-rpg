@@ -1,7 +1,11 @@
 package ks.roleplaying.controller;
 
+import ks.roleplaying.model.InventarioItem;
 import ks.roleplaying.model.Item;
+import ks.roleplaying.model.Personagem;
+import ks.roleplaying.repository.InventarioRepository;
 import ks.roleplaying.service.ItemService;
+import ks.roleplaying.service.PersonagemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,35 +22,18 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
+    @Autowired
+    private PersonagemService personagemService;
+
+    @Autowired
+    private InventarioRepository inventarioRepository;
+
+
     // Get ALL - Item
-    @GetMapping("/all")
+    @GetMapping("")
     public List<Item> getAll() {
         return itemService.getAll();
     }
-
-    /*
-[
-    {
-	    "nome": "Adaga da Morte",
-	    "peso": 1.2,
-	    "preco": 500,
-	    "quantidade": 1
-    },
-    {
-	    "nome": "Poção da Vida",
-	    "peso": 0.2,
-	    "preco": 70,
-	    "quantidade": 1
-    },
-    {
-        "nome": "Poção da Mana",
-        "peso": 0.50,
-        "preco": 100,
-        "quantidade": 1
-    }
-]
-
-     */
 
     // Add Item
     @PostMapping("/add")
@@ -56,6 +43,32 @@ public class ItemController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
+    }
+
+    @PostMapping("/addItemPersonagem/{id}")
+    public ResponseEntity addNewItem(@Valid @RequestBody Item request, @PathVariable(value = "id") Long personagemId) {
+        Personagem personagem = personagemService.getPersonagemById(personagemId);
+        Item item = itemService.getItemByNome(request.getNome());
+        if(personagem != null && item != null) {
+            InventarioItem inventarioItemNovo =  personagem.getInventarioItens()
+            .stream()
+            .filter(inventarioItem -> inventarioItem.getItem() == item)
+            .findAny()
+            .orElse(null);
+            try {
+                if(inventarioItemNovo != null) {
+                    inventarioItemNovo.setQuantidade(inventarioItemNovo.getQuantidade()+1);
+                    //TODO: VERIFY UPDATE
+                    return ResponseEntity.status(HttpStatus.OK).body(inventarioRepository.save(inventarioItemNovo));
+                } else {
+                    InventarioItem inventario = new InventarioItem(item, 1);
+                    inventarioRepository.save(inventario);
+                }
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu algum erro");
     }
 
     // AddAll Item
@@ -75,13 +88,8 @@ public class ItemController {
     // Get - Item
     @GetMapping("/{id}")
     public @ResponseBody
-    Item getItemById(@PathVariable(value = "id") Long carId) {
-        return itemService.getItemById(carId);
-    }
-
-//     Get - Item - ByName
-    public List<Item> getItemByNome(String nome) {
-        return itemService.getItemByName(nome);
+    Item getItemById(@PathVariable(value = "id") Long itemId) {
+        return itemService.getItemById(itemId);
     }
 
     // Delete - Item

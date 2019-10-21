@@ -2,18 +2,22 @@
 ___
 1. ITEM / HABILIDADE
     * [ ] Criar JSON/Entity Padrão Generico p/ Popular
-    * [ ] Definir
-    * [ ] Testar getByName
+    * [ ] Definir - fields
+    * [x] Testar getByName/getItemByNome
+    
             
     
 2. ATRIBUTOS
-    * [ ] Definir
+    * [ ] Definir - fields - modificadores
     
 
 3. PERSONAGEM
     * [ ] Remover exemplos fixos (*Item, Habilidade, atributos*)
-    * [ ] Definir peso total
-    * [x] Tendencia
+    * [x] Definir peso total
+    * [x] Tendencia + Random
+    * [x] Random Atributos
+    * [ ] Metodo Atributos - Front-end
+
 ___  
 
 + [ ] Verificar Updates `/upd/{id}`

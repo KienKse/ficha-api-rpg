@@ -3,7 +3,6 @@ package ks.roleplaying.service;
 import ks.roleplaying.controller.ResourceNotFoundException;
 import ks.roleplaying.model.Item;
 import ks.roleplaying.repository.ItemRepository;
-import ks.roleplaying.repository.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,8 +41,12 @@ public class ItemService {
                 .orElseThrow(() -> new ResourceNotFoundException("ITEM", "id", itemId));
     }
 
-    public List<Item> getItemByName(String nome) {
-        return itemRepository.findByNome(nome);
+    public Item getItemByNome(String nome) {
+        return itemRepository.findAll()
+        .stream()
+        .filter(itemLista -> nome.equals(itemLista.getNome()))
+        .findAny()
+        .orElse(null);
     }
 
     public void deleteItem(Long itemId) {

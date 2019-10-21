@@ -19,31 +19,10 @@ public class HabilidadeController {
     private HabilidadeService habilidadeService;
 
     // Get ALL - Habilidade
-    @GetMapping("/all")
+    @GetMapping("")
     public List<Habilidade> getAll() {
         return habilidadeService.getAll();
     }
-
-    /*
-
-[
-	{
-	    "nome": "Bola de Fogo",
-	    "custo": "12",
-	    "descricao": "O próprio nome já diz tudo"
-    },
-    {
-	    "nome": "Furia",
-	    "descricao": "O portador entra em estado de fúria completa adicionado 3d6 + modificador de força ao seu dano final"
-    },
-    {
-	    "nome": "Cura",
-	    "custo": "4",
-	    "descricao": "O alvo é curado com 1d6"
-    }
-]
-
-    */
 
     // Add Habilidade
     @PostMapping("/add")
@@ -72,8 +51,8 @@ public class HabilidadeController {
     // Get - Habilidade
     @GetMapping("/{id}")
     public @ResponseBody
-    Habilidade getHabilidadeById(@PathVariable(value = "id") Long carId) {
-        return habilidadeService.getHabilidadeById(carId);
+    Habilidade getHabilidadeById(@PathVariable(value = "id") Long habilidadeId) {
+        return habilidadeService.getHabilidadeById(habilidadeId);
     }
 
     // Delete - Habilidade

@@ -34,13 +34,15 @@ public class Personagem implements Serializable {
     @Column(name = "CLASSE", nullable = false, length = 45)
     private String classe;
 
-//    @Column(name = "ID", nullable = false, length = 45)
     @JoinColumn(name = "ID_TENDENCIA_FK", referencedColumnName = "ID")
     @ManyToOne
     private Tendencia tendencia;
 
     @Transient
-    private BigDecimal pesoTotal;
+    private BigDecimal cargaMaxima;
+
+    @Transient
+    private BigDecimal cargaAtual;
 
     @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
     @OneToMany
@@ -56,6 +58,9 @@ public class Personagem implements Serializable {
             {@JoinColumn(name="ID_HABILIDADE")})
     private List<Habilidade> habilidades;
 
+    @Transient
+    private boolean gerarAtributosETendencia;
+
     public Personagem() {
         //EMPTY
     }
@@ -67,10 +72,29 @@ public class Personagem implements Serializable {
         this.classe = request.classe;
         this.atributos = request.atributos;
         this.habilidades = request.habilidades;
+        this.gerarAtributosETendencia = request.gerarAtributosETendencia;
     }
 
-    public BigDecimal getPesoTotal() {
+    public boolean isGerarAtributosETendencia() {
+        return gerarAtributosETendencia;
+    }
+
+    public void setGerarAtributosETendencia(boolean gerarAtributosETendencia) {
+        this.gerarAtributosETendencia = gerarAtributosETendencia;
+    }
+
+    public BigDecimal getCargaMaxima() {
         return BigDecimal.valueOf(atributos.getForca() * 3);
+    }
+
+    public BigDecimal getCargaAtual() {
+        cargaAtual = BigDecimal.ZERO;
+        this.inventarioItens.forEach(inventarioItem -> atribuirCarga(inventarioItem));
+        return cargaAtual;
+    }
+
+    private void atribuirCarga(InventarioItem inventarioItem) {
+        cargaAtual = cargaAtual.add(inventarioItem.getItem().getPeso().multiply(BigDecimal.valueOf(inventarioItem.getQuantidade())));
     }
 
     public Long getId() {

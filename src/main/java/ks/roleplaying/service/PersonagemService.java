@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import ks.roleplaying.controller.ResourceNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class PersonagemService {
@@ -40,23 +42,26 @@ public class PersonagemService {
     @Autowired
     private ItemService itemService;
 
+    private static Random random = new Random();
+
     public List<Personagem> getAll() {
         LOGGER.debug("Obtendo personagens");
         return personagemRepository.findAll();
     }
 
+    @Transactional
     public Personagem addNewPersonagem(Personagem request) {
         Personagem personagem = new Personagem(request);
 
-        Tendencia tendencia = new Tendencia(TendenciaEnum.NB);
+        Tendencia tendencia = personagem.isGerarAtributosETendencia() ? gerarTendencia() : obterTendenciaFront();
         tendenciaRepository.save(tendencia);
 
         personagem.setTendencia(tendencia);
 
 //        Item padrao = itemService.getItemById(1L);
 //        Item padrao2 = itemService.getItemById(2L);
-        Item padrao = itemService.addNewItemCarga("Poção de HP", BigDecimal.ONE, BigDecimal.TEN);
-        Item padrao2 = itemService.addNewItemCarga("Poção de MP", BigDecimal.valueOf(2), BigDecimal.TEN);
+        Item padrao = itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN);
+        Item padrao2 = itemService.addNewItemCarga("Poção de MP", BigDecimal.valueOf(4), BigDecimal.TEN);
 
         InventarioItem inventarioItem = new InventarioItem(padrao, 2);
         InventarioItem inventarioItem2 = new InventarioItem(padrao2, 1);
@@ -67,7 +72,7 @@ public class PersonagemService {
         personagem.getInventarioItens().add(inventarioItem);
         personagem.getInventarioItens().add(inventarioItem2);
 
-        Atributos atributos = new Atributos(10, 10, 10, 10, 10, 10);
+        Atributos atributos = personagem.isGerarAtributosETendencia() ? atributosBasicos() : obterAtributosFront();
 
         atributosRepository.save(atributos);
 
@@ -78,6 +83,25 @@ public class PersonagemService {
         personagem.getHabilidades().add(furia);
 
         return personagemRepository.save(personagem);
+    }
+
+    private Tendencia obterTendenciaFront() {
+        //TODO
+        return null;
+    }
+
+    private Tendencia gerarTendencia() {
+        int number = random.nextInt(TendenciaEnum.values().length);
+        return new Tendencia(TendenciaEnum.getByCodigo(number == 0 ? 1 : number));
+    }
+
+    private Atributos obterAtributosFront() {
+        //TODO
+        return null;
+    }
+
+    private Atributos atributosBasicos() {
+        return new Atributos(diceRoll(), diceRoll(), diceRoll(), diceRoll(), diceRoll(), diceRoll());
     }
 
     public Personagem getPersonagemById(Long personagemId) {
@@ -105,6 +129,9 @@ public class PersonagemService {
         return ResponseEntity.noContent().build();
     }
 
-
+    public static int diceRoll() {
+        int number = random.nextInt(20);
+        return number < 3 ? 3 : number;
+    }
 
 }
