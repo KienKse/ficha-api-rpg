@@ -22,13 +22,6 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    @Autowired
-    private PersonagemService personagemService;
-
-    @Autowired
-    private InventarioRepository inventarioRepository;
-
-
     // Get ALL - Item
     @GetMapping("")
     public List<Item> getAll() {
@@ -43,32 +36,6 @@ public class ItemController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
-    }
-
-    @PostMapping("/addItemPersonagem/{id}")
-    public ResponseEntity addNewItem(@Valid @RequestBody Item request, @PathVariable(value = "id") Long personagemId) {
-        Personagem personagem = personagemService.getPersonagemById(personagemId);
-        Item item = itemService.getItemByNome(request.getNome());
-        if(personagem != null && item != null) {
-            InventarioItem inventarioItemNovo =  personagem.getInventarioItens()
-            .stream()
-            .filter(inventarioItem -> inventarioItem.getItem() == item)
-            .findAny()
-            .orElse(null);
-            try {
-                if(inventarioItemNovo != null) {
-                    inventarioItemNovo.setQuantidade(inventarioItemNovo.getQuantidade()+1);
-                    //TODO: VERIFY UPDATE
-                    return ResponseEntity.status(HttpStatus.OK).body(inventarioRepository.save(inventarioItemNovo));
-                } else {
-                    InventarioItem inventario = new InventarioItem(item, 1);
-                    inventarioRepository.save(inventario);
-                }
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-            }
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu algum erro");
     }
 
     // AddAll Item

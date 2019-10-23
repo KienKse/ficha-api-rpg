@@ -25,17 +25,6 @@ public class PersonagemController {
         return personagemService.getAll();
     }
 
-    /*
-
-    {
-	    "nome": "Roger",
-	    "classe": "Mago",
-	    "raca": "Humano",
-	    "nivel": 1
-    }
-
-     */
-
     // Add Personagem
     @PostMapping("/add")
     @Transactional
@@ -58,7 +47,6 @@ public class PersonagemController {
     @DeleteMapping("/{id}")
     public @ResponseBody
     ResponseEntity<?> deletePersonagem(@PathVariable(value = "id") Long personagemId) {
-//        Personagem personagem = personagemService.getPersonagemById(personagemId);
         personagemService.deletePersonagem(personagemId);
 
         return ResponseEntity.ok().build();

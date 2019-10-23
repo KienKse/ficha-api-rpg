@@ -1,5 +1,6 @@
 package ks.roleplaying.model;
 
+import ks.roleplaying.repository.InventarioRepository;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -23,9 +24,18 @@ public class InventarioItem implements Serializable {
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
 
+    @Transient
+    private boolean adicionar;
+
     public InventarioItem(Item item, Integer quantidade) {
         this.item = item;
         this.quantidade = quantidade;
+    }
+
+    public InventarioItem(InventarioItem request) {
+        this.item =  request.item;
+        this.quantidade = request.quantidade;
+        this.adicionar = request.adicionar;
     }
 
     public InventarioItem() {
@@ -56,50 +66,11 @@ public class InventarioItem implements Serializable {
         this.quantidade = quantidade;
     }
 
-    /*
-    public void addItem(Item item) {
-        if(itens == null) {
-            this.itens = new ArrayList<>();
-        } else {
-            Item itemExistente = itens.stream()
-                    .filter(itemLista -> item.getNome().equals(itemLista.getNome()))
-                    .findAny()
-                    .orElse(null);
-            this.itens.add(item);
-        }
+    public boolean isAdicionar() {
+        return adicionar;
     }
 
-    public Item getItemByName(String nome) {
-        return itens.stream()
-                .filter(item -> nome.equals(item.getNome()))
-                .findAny()
-                .orElse(null);
+    public void setAdicionar(boolean adicionar) {
+        this.adicionar = adicionar;
     }
-
-    public void removeItem(Item item) {
-        try {
-            Item itemExistente = itens.stream()
-                    .filter(itemLista -> item.getNome().equals(itemLista.getNome()))
-                    .findAny()
-                    .orElse(null);
-            itens.remove(item);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void removeItemByName(String nome) {
-        try {
-            Item itemExistente = itens.stream()
-                    .filter(itemLista -> nome.equals(itemLista.getNome()))
-                    .findAny()
-                    .orElse(null);
-            itens.remove(itemExistente);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-*/
-
-
 }
