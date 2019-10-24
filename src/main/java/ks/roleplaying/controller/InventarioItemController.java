@@ -49,6 +49,8 @@ public class InventarioItemController {
                         inventarioItem.setQuantidade(inventarioItem.getQuantidade() - request.getQuantidade());
                         if (inventarioItem.getQuantidade() <= 0) {
                             inventarioItemService.deleteInventarioItem(inventarioItem.getId());
+                        } else {
+                            inventarioItemService.save(inventarioItem);
                         }
                     }
                     return ResponseEntity.status(HttpStatus.OK).body("Operação realizada com sucesso");
