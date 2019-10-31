@@ -12,7 +12,7 @@ ___
     
 
 3. PERSONAGEM
-    * [ ] Remover exemplos fixos (*Item, Habilidade, atributos*)
+    * [x] Remover exemplos fixos (*Item, Habilidade, atributos*)
     * [x] Definir peso total
     * [x] Tendencia + Random
     * [x] Random Atributos
