@@ -1,1 +1,1 @@
-web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/ficha-api-rpg.jar
+web: java -Dserver.port=$PORT $JAVA_OPTS -jar build/libs/roleplaying-0.0.1-SNAPSHOT.jar
