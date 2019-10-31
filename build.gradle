@@ -35,3 +35,20 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test')
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
 }
+
+task wrapper(type: Wrapper) {
+	gradleVersion = '1.6'
+}
+
+task stage(type: Copy, dependsOn: [clean, build]) {
+	from jar.archivePath
+	into project.rootDir
+	rename {
+		'ficha-api-rpg.jar'
+	}
+}
+stage.mustRunAfter(clean)
+
+clean << {
+	project.file('ficha-api-rpg.jar').delete()
+}
