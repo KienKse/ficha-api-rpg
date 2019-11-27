@@ -1,5 +1,7 @@
 package ks.roleplaying.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import ks.roleplaying.model.Habilidade;
 import ks.roleplaying.service.HabilidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/habilidade")
+@Api(value = "Habilidade")
 public class HabilidadeController {
 
     @Autowired
@@ -20,12 +23,14 @@ public class HabilidadeController {
 
     // Get ALL - Habilidade
     @GetMapping("")
+    @ApiOperation(value = "Obter todos as habilidades")
     public List<Habilidade> getAll() {
         return habilidadeService.getAll();
     }
 
     // Add Habilidade
     @PostMapping("/add")
+    @ApiOperation(value = "Adicionar uma habilidade")
     public ResponseEntity addNewHabilidade(@Valid @RequestBody Habilidade request) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(habilidadeService.addNewHabilidade(request));
@@ -36,6 +41,7 @@ public class HabilidadeController {
 
     // AddAll Habilidade
     @PostMapping("/addList")
+    @ApiOperation(value = "Adicionar uma lista de habilidades")
     public void addListHabilidade(@RequestBody List<Habilidade> habilidades) {
         habilidades.forEach(this::adicionarHabilidade);
     }
@@ -50,15 +56,15 @@ public class HabilidadeController {
 
     // Get - Habilidade
     @GetMapping("/{id}")
-    public @ResponseBody
-    Habilidade getHabilidadeById(@PathVariable(value = "id") Long habilidadeId) {
+    @ApiOperation(value = "Obter uma habilidade pelo ID")
+    public @ResponseBody Habilidade getHabilidadeById(@PathVariable(value = "id") Long habilidadeId) {
         return habilidadeService.getHabilidadeById(habilidadeId);
     }
 
     // Delete - Habilidade
     @DeleteMapping("/{id}")
-    public @ResponseBody
-    ResponseEntity<?> deleteHabilidade(@PathVariable(value = "id") Long habilidadeId) {
+    @ApiOperation(value = "Deletar uma habilidade pelo ID")
+    public @ResponseBody ResponseEntity<?> deleteHabilidade(@PathVariable(value = "id") Long habilidadeId) {
 //        Habilidade habilidade = habilidadeService.getHabilidadeById(habilidadeId);
         habilidadeService.deleteHabilidade(habilidadeId);
 
@@ -67,6 +73,7 @@ public class HabilidadeController {
 
     // Update Habilidade
     @PutMapping("/upd/{id}")
+    @ApiOperation(value = "Atualizar uma habilidade pelo ID")
     public ResponseEntity<Habilidade> updateHabilidade(@RequestBody Habilidade habilidade, @PathVariable Long id){
 
         Optional<Habilidade> habilidadeOptional = Optional.ofNullable(habilidadeService.getHabilidadeById(id));

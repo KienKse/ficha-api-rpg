@@ -15,7 +15,7 @@ public class Talento {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NOME", nullable = false, length)
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
     @Column(name = "PRE_REQUISITO", nullable = false)
@@ -25,25 +25,33 @@ public class Talento {
     private String beneficio;
     
     @Column(name = "NORMAL")
-    private String preRequisito;
+    private String normal;
     
     @Column(name = "ESPECIAL")
-    private String preRequisito;
+    private String especial;
 
     public Talento() {
         //EMPTY
     }
 
-    public Talento(String nome, String preRequisito, String normal, String especial) {
+    public Talento(String nome, String preRequisito, String beneficio, String normal, String especial) {
         this.nome = nome;
         this.preRequisito = preRequisito;
+        this.beneficio = beneficio;
         this.normal = normal;
         this.especial = especial;
     }
 
+    public Talento(String nome, String preRequisito, String beneficio) {
+        this.nome = nome;
+        this.preRequisito = preRequisito;
+        this.beneficio = beneficio;
+    }
+    
     public Talento(Talento request) {
         this.nome = request.nome;
         this.preRequisito = request.preRequisito;
+        this.beneficio = request.beneficio;
         this.normal = request.normal;
         this.especial = request.especial;
     }

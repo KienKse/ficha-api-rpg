@@ -1,5 +1,7 @@
 package ks.roleplaying.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import ks.roleplaying.model.InventarioItem;
 import ks.roleplaying.model.Item;
 import ks.roleplaying.model.Personagem;
@@ -17,6 +19,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/item")
+@Api(value = "Item")
 public class ItemController {
 
     @Autowired
@@ -24,12 +27,14 @@ public class ItemController {
 
     // Get ALL - Item
     @GetMapping("")
+    @ApiOperation(value = "Obter todos os itens ")
     public List<Item> getAll() {
         return itemService.getAll();
     }
 
     // Add Item
     @PostMapping("/add")
+    @ApiOperation(value = "Adicionar um item")
     public ResponseEntity addNewItem(@Valid @RequestBody Item request) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(itemService.addNewItem(request));
@@ -40,6 +45,7 @@ public class ItemController {
 
     // AddAll Item
     @PostMapping("/addList")
+    @ApiOperation(value = "Adicionar uma lista itens")
     public void addListItens(@Valid @RequestBody List<Item> itens) {
             itens.forEach(this::adicionarItens);
     }
@@ -54,6 +60,7 @@ public class ItemController {
 
     // Get - Item
     @GetMapping("/{id}")
+    @ApiOperation(value = "Obter um item pelo ID")
     public @ResponseBody
     Item getItemById(@PathVariable(value = "id") Long itemId) {
         return itemService.getItemById(itemId);
@@ -61,6 +68,7 @@ public class ItemController {
 
     // Delete - Item
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Deletar um item pelo ID")
     public @ResponseBody
     ResponseEntity<?> deleteItem(@PathVariable(value = "id") Long itemId) {
 //        Item item = itemService.getItemById(itemId);
@@ -71,6 +79,7 @@ public class ItemController {
 
     // Update Item
     @PutMapping("/upd/{id}")
+    @ApiOperation(value = "Atualizar um item pelo ID")
     public ResponseEntity<Item> updateItem(@RequestBody Item item, @PathVariable Long id){
 
         Optional<Item> itemOptional = Optional.ofNullable(itemService.getItemById(id));
