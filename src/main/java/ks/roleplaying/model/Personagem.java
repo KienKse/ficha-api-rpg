@@ -89,12 +89,13 @@ public class Personagem implements Serializable {
 
     public BigDecimal getCargaAtual() {
         cargaAtual = BigDecimal.ZERO;
-        this.inventarioItens.forEach(inventarioItem -> atribuirCarga(inventarioItem));
+        this.inventarioItens.forEach(this::atribuirCarga);
         return cargaAtual;
     }
 
     private void atribuirCarga(InventarioItem inventarioItem) {
-        cargaAtual = cargaAtual.add(inventarioItem.getItem().getPeso().multiply(BigDecimal.valueOf(inventarioItem.getQuantidade())));
+        if(inventarioItem.getItem().getPeso() != null)
+            cargaAtual = cargaAtual.add(inventarioItem.getItem().getPeso().multiply(BigDecimal.valueOf(inventarioItem.getQuantidade())));
     }
 
     public Long getId() {

@@ -19,10 +19,10 @@ public class Item {
     @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "PESO", nullable = false)
+    @Column(name = "PESO")
     private BigDecimal peso;
 
-    @Column(name = "PRECO", nullable = false)
+    @Column(name = "PRECO")
     private BigDecimal preco;
 
     public Item() {
