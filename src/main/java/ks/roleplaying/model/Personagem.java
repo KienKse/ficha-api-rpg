@@ -48,6 +48,14 @@ public class Personagem implements Serializable {
     @OneToMany
     private List<InventarioItem> inventarioItens;
 
+    @JoinColumn(name = "ID_TALENTO_FK", referencedColumnName = "ID")
+    @OneToMany
+    private List<Talento> talentos;
+
+    @JoinColumn(name = "ID_PERICIA_FK", referencedColumnName = "ID")
+    @OneToMany
+    private List<Pericia> pericias;
+
     @OneToOne
     @JoinColumn(name = "ID_ATRIBUTO_FK", referencedColumnName = "ID")
     private Atributos atributos;
@@ -77,10 +85,6 @@ public class Personagem implements Serializable {
 
     public boolean isGerarAtributosETendencia() {
         return gerarAtributosETendencia;
-    }
-
-    public void setGerarAtributosETendencia(boolean gerarAtributosETendencia) {
-        this.gerarAtributosETendencia = gerarAtributosETendencia;
     }
 
     public BigDecimal getCargaMaxima() {
