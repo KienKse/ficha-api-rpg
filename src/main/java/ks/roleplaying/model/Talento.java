@@ -21,39 +21,28 @@ public class Talento {
     @Column(name = "PRE_REQUISITO", nullable = false)
     private String preRequisito;
     
-    @Column(name = "BENEFICIO", nullable = false)
+    @Column(name = "BENEFICIO", nullable = false, columnDefinition="LONGTEXT")
     private String beneficio;
     
-    @Column(name = "NORMAL")
-    private String normal;
+    @Column(name = "OBS")
+    private String observacao;
     
-    @Column(name = "ESPECIAL")
-    private String especial;
-
     public Talento() {
         //EMPTY
     }
 
-    public Talento(String nome, String preRequisito, String beneficio, String normal, String especial) {
+    public Talento(String nome, String preRequisito, String beneficio, String observacao) {
         this.nome = nome;
         this.preRequisito = preRequisito;
         this.beneficio = beneficio;
-        this.normal = normal;
-        this.especial = especial;
+        this.observacao = observacao;
     }
 
-    public Talento(String nome, String preRequisito, String beneficio) {
-        this.nome = nome;
-        this.preRequisito = preRequisito;
-        this.beneficio = beneficio;
-    }
-    
     public Talento(Talento request) {
         this.nome = request.nome;
         this.preRequisito = request.preRequisito;
         this.beneficio = request.beneficio;
-        this.normal = request.normal;
-        this.especial = request.especial;
+        this.observacao = request.observacao;
     }
 
     public Long getId() {
@@ -71,5 +60,28 @@ public class Talento {
     public void setNome(String nome) {
         this.nome = nome;
     }
-                                            
+
+    public String getPreRequisito() {
+        return preRequisito;
+    }
+
+    public void setPreRequisito(String preRequisito) {
+        this.preRequisito = preRequisito;
+    }
+
+    public String getBeneficio() {
+        return beneficio;
+    }
+
+    public void setBeneficio(String beneficio) {
+        this.beneficio = beneficio;
+    }
+
+    public String getObservacao() {
+        return observacao;
+    }
+
+    public void setObservacao(String observacao) {
+        this.observacao = observacao;
+    }
 }

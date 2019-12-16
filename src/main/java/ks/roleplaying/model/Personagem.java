@@ -47,19 +47,18 @@ public class Personagem implements Serializable {
     private BigDecimal cargaAtual;
 
     @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<InventarioItem> inventarioItens;
 
-    //TODO: VERIFY LAZY EAGER
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name="personagem_talentos", joinColumns=
             {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
             {@JoinColumn(name="ID_TALENTO")})
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Talento> talentos;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     @JoinTable(name="personagem_pericicas", joinColumns=
             {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
@@ -70,7 +69,7 @@ public class Personagem implements Serializable {
     @JoinColumn(name = "ID_ATRIBUTO_FK", referencedColumnName = "ID")
     private Atributos atributos;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name="personagem_habilidades", joinColumns=
             {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
             {@JoinColumn(name="ID_HABILIDADE")})
@@ -91,6 +90,9 @@ public class Personagem implements Serializable {
         this.classe = request.classe;
         this.atributos = request.atributos;
         this.habilidades = request.habilidades;
+        this.pericias = request.pericias;
+        this.talentos = request.talentos;
+        this.inventarioItens = request.inventarioItens;
         this.gerarAtributosETendencia = request.gerarAtributosETendencia;
     }
 
@@ -189,5 +191,27 @@ public class Personagem implements Serializable {
 
     public void setInventarioItens(List<InventarioItem> inventarioItens) {
         this.inventarioItens = inventarioItens;
+    }
+
+    public List<Talento> getTalentos() {
+        if(talentos == null) {
+            talentos = new ArrayList<>();
+        }
+        return talentos;
+    }
+
+    public void setTalentos(List<Talento> talentos) {
+        this.talentos = talentos;
+    }
+
+    public List<Pericia> getPericias() {
+        if(pericias == null) {
+            pericias = new ArrayList<>();
+        }
+        return pericias;
+    }
+
+    public void setPericias(List<Pericia> pericias) {
+        this.pericias = pericias;
     }
 }

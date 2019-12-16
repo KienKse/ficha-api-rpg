@@ -40,6 +40,12 @@ public class PersonagemService {
     private HabilidadeService habilidadeService;
 
     @Autowired
+    private TalentoService talentoService;
+
+    @Autowired
+    private PericiaService periciaService;
+
+    @Autowired
     private ItemService itemService;
 
     private static Random random = new Random();
@@ -58,7 +64,7 @@ public class PersonagemService {
 
         personagem.setTendencia(tendencia);
 
-        if(!personagem.isGerarAtributosETendencia()) {
+        if(personagem.isGerarAtributosETendencia()) {
             Item padrao = itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN);
             Item padrao2 = itemService.addNewItemCarga("Poção de MP", BigDecimal.valueOf(4), BigDecimal.TEN);
 
@@ -74,6 +80,23 @@ public class PersonagemService {
             Habilidade furia = habilidadeService.addNewHabilidadeCarga("Furia", 10, "Dobra o dano do próximo ataque");
 
             personagem.getHabilidades().add(furia);
+
+            Talento t1 = new Talento("Canto Monástico", "treinado em Atuação (música), capacidade de lançar magias divinas.",
+                    "quando você lança uma magia, pode gastar uma ação de movimento para entoar um canto litúrgico. Se fizer isso, a CD para resistir à magia aumenta em +1. Você pode usar este talento um número de vezes por dia igual ao seu bônus de Carisma +1. Obviamente, você não pode lançar magias desta forma se não puder fazer sons (por exemplo, sob efeito de Magia Silenciosa).",
+                    "[Manual do Devoto pg. 44] Você foi treinado em um mosteiro, onde rezava através de belos cânticos.");
+
+//            talentoService.addNewTalento(t1);
+
+            personagem.getTalentos().add(t1);
+
+            Pericia p1 = new Pericia("Domesticar um animal selvagem", "Adestrar Animais",
+                    "Carisma", 25, "Você pode criar um animal selvagem desde filhote, " +
+                    "domesticando-o. O tempo necessário varia de acordo com a criatura.");
+
+//            periciaService.addNewPericia(p1);
+
+            personagem.getPericias().add(p1);
+
         } else {
             personagem.getInventarioItens().forEach(this::adicionarInventarioItem);
         }

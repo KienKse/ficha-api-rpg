@@ -18,47 +18,37 @@ public class Pericia {
     @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "TIPO")
-    private String tipo;
+    @Column(name = "HABILIDADE_CHAVE", nullable = false)
+    private String habilidade_chave;
 
-    @Column(name = "TIPO_DESCRICAO")
-    private String tipoDescricao;
+    @Column(name = "TREINADA", nullable = false)
+    private String treinada;
 
     @Column(name = "CD")
+//    private String penalidade_armadura;
     private Integer cd;
 
-    @Column(name = "DESCRICAO", nullable = false)
+    @Column(name = "DESCRICAO")
     private String descricao;
 
     public Pericia() {
         //EMPTY
     }
 
-    public Pericia(String nome, String tipo, String tipoDescricao, Integer cd, String descricao) {
+    public Pericia(String nome, String habilidade_chave, String treinada, Integer cd, String descricao) {
         this.nome = nome;
-        this.tipo = tipo;
-        this.tipoDescricao = tipoDescricao;
+        this.habilidade_chave = habilidade_chave;
+        this.treinada= treinada;
         this.cd = cd;
         this.descricao = descricao;
     }
 
     public Pericia(Pericia request) {
         this.nome = request.nome;
-        this.tipo = request.tipo;
-        this.tipoDescricao = request.tipoDescricao;
+        this.habilidade_chave = request.habilidade_chave;
+        this.treinada = request.treinada;
         this.cd = request.cd;
         this.descricao = request.descricao;
-    }
-
-    public Pericia(String nome, String descricao) {
-        this.nome = nome;
-        this.descricao = descricao;
-    }
-
-    public Pericia(String nome, String descricao, Integer cd) {
-        this.nome = nome;
-        this.descricao = descricao;
-        this.cd = cd;
     }
 
     public Long getId() {
@@ -77,20 +67,20 @@ public class Pericia {
         this.nome = nome;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getHabilidade_chave() {
+        return habilidade_chave;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void setHabilidade_chave(String habilidade_chave) {
+        this.habilidade_chave = habilidade_chave;
     }
 
-    public String getTipoDescricao() {
-        return tipoDescricao;
+    public String getTreinada() {
+        return treinada;
     }
 
-    public void setTipoDescricao(String tipoDescricao) {
-        this.tipoDescricao = tipoDescricao;
+    public void setTreinada(String treinada) {
+        this.treinada = treinada;
     }
 
     public Integer getCd() {
