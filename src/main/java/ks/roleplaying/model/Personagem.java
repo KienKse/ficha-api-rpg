@@ -80,7 +80,7 @@ public class Personagem implements Serializable {
     private boolean gerarAtributosETendencia;
 
     public Personagem() {
-        //EMPTY
+        /** Construtor Vazio */
     }
 
     public Personagem(Personagem request) {

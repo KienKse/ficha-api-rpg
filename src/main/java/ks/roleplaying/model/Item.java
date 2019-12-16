@@ -26,7 +26,7 @@ public class Item {
     private BigDecimal preco;
 
     public Item() {
-        //EMPTY
+        /** Construtor Vazio */
     }
 
     public Item(String nome, BigDecimal peso, BigDecimal preco) {

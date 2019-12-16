@@ -27,6 +27,11 @@ public class InventarioItem implements Serializable {
     @Transient
     private boolean adicionar;
 
+    public InventarioItem() {
+        /** Construtor Vazio */
+    }
+
+
     public InventarioItem(Item item, Integer quantidade) {
         this.item = item;
         this.quantidade = quantidade;
@@ -36,10 +41,6 @@ public class InventarioItem implements Serializable {
         this.item =  request.item;
         this.quantidade = request.quantidade;
         this.adicionar = request.adicionar;
-    }
-
-    public InventarioItem() {
-        //EMPTY
     }
 
     public Long getId() {

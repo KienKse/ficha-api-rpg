@@ -26,11 +26,11 @@ public class Talento {
     
     @Column(name = "OBS")
     private String observacao;
-    
-    public Talento() {
-        //EMPTY
-    }
 
+    public Talento() {
+        /** Construtor Vazio */
+    }
+    
     public Talento(String nome, String preRequisito, String beneficio, String observacao) {
         this.nome = nome;
         this.preRequisito = preRequisito;

@@ -32,7 +32,7 @@ public class Pericia {
     private String descricao;
 
     public Pericia() {
-        //EMPTY
+        /** Construtor Vazio */
     }
 
     public Pericia(String nome, String habilidade_chave, String treinada, Integer cd, String descricao) {

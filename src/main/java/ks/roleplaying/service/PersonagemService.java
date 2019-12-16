@@ -77,9 +77,9 @@ public class PersonagemService {
             personagem.getInventarioItens().add(inventarioItem);
             personagem.getInventarioItens().add(inventarioItem2);
 
-            Habilidade furia = habilidadeService.addNewHabilidadeCarga("Furia", 10, "Dobra o dano do próximo ataque");
+            Habilidade habilidade = new Habilidade("Abençoar Água", "Divina 1 (cura)","Esta magia imbui um frasco d’água com energia positiva, transformando-a em água benta (veja o Capítulo 7: Equipamento). Componente material: 2,5kg de prata em pó (no valor de 25 TO).");
 
-            personagem.getHabilidades().add(furia);
+            personagem.getHabilidades().add(habilidade);
 
             Talento t1 = new Talento("Canto Monástico", "treinado em Atuação (música), capacidade de lançar magias divinas.",
                     "quando você lança uma magia, pode gastar uma ação de movimento para entoar um canto litúrgico. Se fizer isso, a CD para resistir à magia aumenta em +1. Você pode usar este talento um número de vezes por dia igual ao seu bônus de Carisma +1. Obviamente, você não pode lançar magias desta forma se não puder fazer sons (por exemplo, sob efeito de Magia Silenciosa).",

@@ -25,7 +25,7 @@ public class Tendencia {
     private TendenciaEnum tendencia;
 
     public Tendencia() {
-        //EMPTY
+        /** Construtor Vazio */
     }
 
     public Tendencia(TendenciaEnum tendencia) {

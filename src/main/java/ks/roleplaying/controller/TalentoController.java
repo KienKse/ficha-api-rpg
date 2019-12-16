@@ -30,7 +30,7 @@ public class TalentoController {
 
     // Add Talento
     @PostMapping("/add")
-    @ApiOperation(value = "Adicionar uma talento")
+    @ApiOperation(value = "Adicionar um talento")
     public ResponseEntity addNewTalento(@Valid @RequestBody Talento request) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(talentoService.addNewTalento(request));
@@ -56,14 +56,14 @@ public class TalentoController {
 
     // Get - Talento
     @GetMapping("/{id}")
-    @ApiOperation(value = "Obter uma talento pelo ID")
+    @ApiOperation(value = "Obter um talento pelo ID")
     public @ResponseBody Talento getTalentoById(@PathVariable(value = "id") Long talentoId) {
         return talentoService.getTalentoById(talentoId);
     }
 
     // Delete - Talento
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Deletar uma talento pelo ID")
+    @ApiOperation(value = "Deletar um talento pelo ID")
     public @ResponseBody ResponseEntity<?> deleteTalento(@PathVariable(value = "id") Long talentoId) {
 //        Talento talento = talentoService.getTalentoById(talentoId);
         talentoService.deleteTalento(talentoId);
@@ -73,7 +73,7 @@ public class TalentoController {
 
     // Update Talento
     @PutMapping("/upd/{id}")
-    @ApiOperation(value = "Atualizar uma talento pelo ID")
+    @ApiOperation(value = "Atualizar um talento pelo ID")
     public ResponseEntity<Talento> updateTalento(@RequestBody Talento talento, @PathVariable Long id){
 
         Optional<Talento> talentoOptional = Optional.ofNullable(talentoService.getTalentoById(id));
