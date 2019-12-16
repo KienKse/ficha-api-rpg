@@ -1,5 +1,7 @@
 package ks.roleplaying.model;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -45,25 +47,34 @@ public class Personagem implements Serializable {
     private BigDecimal cargaAtual;
 
     @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<InventarioItem> inventarioItens;
 
-    @JoinColumn(name = "ID_TALENTO_FK", referencedColumnName = "ID")
-    @OneToMany
+    //TODO: VERIFY LAZY EAGER
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name="personagem_talentos", joinColumns=
+            {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
+            {@JoinColumn(name="ID_TALENTO")})
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Talento> talentos;
 
-    @JoinColumn(name = "ID_PERICIA_FK", referencedColumnName = "ID")
-    @OneToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @Fetch(value = FetchMode.SUBSELECT)
+    @JoinTable(name="personagem_pericicas", joinColumns=
+            {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
+            {@JoinColumn(name="ID_PERICIA")})
     private List<Pericia> pericias;
 
     @OneToOne
     @JoinColumn(name = "ID_ATRIBUTO_FK", referencedColumnName = "ID")
     private Atributos atributos;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name="personagem_habilidades", joinColumns=
             {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
             {@JoinColumn(name="ID_HABILIDADE")})
+    @Fetch(value = FetchMode.SUBSELECT)
     private List<Habilidade> habilidades;
 
     @Transient

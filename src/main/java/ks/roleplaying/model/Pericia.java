@@ -24,7 +24,7 @@ public class Pericia {
     @Column(name = "TIPO_DESCRICAO")
     private String tipoDescricao;
 
-    @Column(name = "CD", nullable = false)
+    @Column(name = "CD")
     private Integer cd;
 
     @Column(name = "DESCRICAO", nullable = false)
