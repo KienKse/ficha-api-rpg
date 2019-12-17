@@ -1,35 +1,28 @@
 package ks.roleplaying.enums;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 public enum MoedaEnum {
 
-    //TODO: CONTINUAR MOEDA ENUM APLICAR AO PERSONAGEM
-
-    T$(1, 1, "Leal e Bondoso"),
-    TP(2, 10, "Neutro e Bondoso"),
-    TO(3,  100,"Caótico e Bondoso"),
-    TL(4,  1000,"Leal e Neutro");
+    T$(1, BigDecimal.valueOf(1)),
+    TP(2, BigDecimal.valueOf(10)),
+    TO(3, BigDecimal.valueOf(100)),
+    TL(4, BigDecimal.valueOf(1000));
 
     private Integer codigo;
-    private Integer qtdBase;
-    private String moeda;
+    private BigDecimal qtdBase;
 
-    MoedaEnum(Integer codigo, Integer qtdBase, String moeda) {
+    MoedaEnum(Integer codigo, BigDecimal qtdBase) {
         this.codigo = codigo;
         this.qtdBase = qtdBase;
-        this.moeda = moeda;
-    }
-
-    public String getMoeda() {
-        return moeda;
     }
 
     public Integer getCodigo() {
         return codigo;
     }
 
-    public Integer getQtdBase() {
+    public BigDecimal getQtdBase() {
         return qtdBase;
     }
 
@@ -38,6 +31,14 @@ public enum MoedaEnum {
                 .filter(item -> item.codigo.compareTo(cod) == 0)
                 .findAny()
                 .orElse(null);
+    }
+
+    public static BigDecimal converterTibar(BigDecimal tibaresNormal, MoedaEnum tibar) {
+        if(tibar.getQtdBase().compareTo(BigDecimal.ONE) != 0) {
+            return tibaresNormal.divide(tibar.getQtdBase());
+        } else {
+            return tibaresNormal;
+        }
     }
 
 }

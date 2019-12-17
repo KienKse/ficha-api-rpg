@@ -40,6 +40,10 @@ public class Personagem implements Serializable {
     @ManyToOne
     private Tendencia tendencia;
 
+    @JoinColumn(name = "ID_MOEDA_FK", referencedColumnName = "ID")
+    @ManyToOne
+    private Moeda moeda;
+
     @Transient
     private BigDecimal cargaMaxima;
 
