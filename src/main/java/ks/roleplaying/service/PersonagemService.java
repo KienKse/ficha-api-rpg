@@ -1,12 +1,10 @@
 package ks.roleplaying.service;
 
 import ks.roleplaying.controller.ResourceNotFoundException;
+import ks.roleplaying.enums.MoedaEnum;
 import ks.roleplaying.enums.TendenciaEnum;
 import ks.roleplaying.model.*;
-import ks.roleplaying.repository.AtributosRepository;
-import ks.roleplaying.repository.InventarioRepository;
-import ks.roleplaying.repository.PersonagemRepository;
-import ks.roleplaying.repository.TendenciaRepository;
+import ks.roleplaying.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +35,9 @@ public class PersonagemService {
     private TendenciaRepository tendenciaRepository;
 
     @Autowired
+    private MoedaRepository moedaRepository;
+
+    @Autowired
     private HabilidadeService habilidadeService;
 
     @Autowired
@@ -59,11 +60,6 @@ public class PersonagemService {
     public Personagem addNewPersonagem(Personagem request) {
         Personagem personagem = new Personagem(request);
 
-        Tendencia tendencia = personagem.isGerarAtributosETendencia() ? gerarTendencia() : obterTendenciaFront(request);
-        tendenciaRepository.save(tendencia);
-
-        personagem.setTendencia(tendencia);
-
         if(personagem.isGerarAtributosETendencia()) {
             Item padrao = itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN);
             Item padrao2 = itemService.addNewItemCarga("Poção de MP", BigDecimal.valueOf(4), BigDecimal.TEN);
@@ -76,6 +72,14 @@ public class PersonagemService {
 
             personagem.getInventarioItens().add(inventarioItem);
             personagem.getInventarioItens().add(inventarioItem2);
+
+            Tendencia tendencia = gerarTendencia();
+            tendenciaRepository.save(tendencia);
+            personagem.setTendencia(tendencia);
+
+            Moeda moeda = gerarMoeda();
+            moedaRepository.save(moeda);
+            personagem.setMoeda(moeda);
 
             Habilidade habilidade = new Habilidade("Abençoar Água", "Divina 1 (cura)","Esta magia imbui um frasco d’água com energia positiva, transformando-a em água benta (veja o Capítulo 7: Equipamento). Componente material: 2,5kg de prata em pó (no valor de 25 TO).");
 
@@ -124,6 +128,11 @@ public class PersonagemService {
     private Tendencia gerarTendencia() {
         int number = random.nextInt(TendenciaEnum.values().length);
         return new Tendencia(TendenciaEnum.getByCodigo(number == 0 ? 1 : number));
+    }
+
+    private Moeda gerarMoeda() {
+        int number = random.nextInt(MoedaEnum.values().length);
+        return new Moeda(MoedaEnum.getByCodigo(number == 0 ? 1 : number), BigDecimal.valueOf(100));
     }
 
     private Atributos obterAtributosFront(Personagem personagem) {

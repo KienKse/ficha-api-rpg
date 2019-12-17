@@ -56,4 +56,5 @@ public class Moeda {
     public void setMoeda(MoedaEnum moeda) {
         this.moeda = moeda;
     }
+
 }

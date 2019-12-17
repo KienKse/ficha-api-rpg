@@ -33,7 +33,7 @@ public enum MoedaEnum {
                 .orElse(null);
     }
 
-    public static BigDecimal converterTibar(BigDecimal tibaresNormal, MoedaEnum tibar) {
+    public static BigDecimal converterTibarNormal(BigDecimal tibaresNormal, MoedaEnum tibar) {
         if(tibar.getQtdBase().compareTo(BigDecimal.ONE) != 0) {
             return tibaresNormal.divide(tibar.getQtdBase());
         } else {

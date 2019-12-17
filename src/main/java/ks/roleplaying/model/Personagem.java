@@ -97,6 +97,7 @@ public class Personagem implements Serializable {
         this.pericias = request.pericias;
         this.talentos = request.talentos;
         this.inventarioItens = request.inventarioItens;
+        this.moeda = request.moeda;
         this.gerarAtributosETendencia = request.gerarAtributosETendencia;
     }
 
@@ -217,5 +218,13 @@ public class Personagem implements Serializable {
 
     public void setPericias(List<Pericia> pericias) {
         this.pericias = pericias;
+    }
+
+    public Moeda getMoeda() {
+        return moeda;
+    }
+
+    public void setMoeda(Moeda moeda) {
+        this.moeda = moeda;
     }
 }
