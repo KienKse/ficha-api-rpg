@@ -17,20 +17,27 @@ public class Moeda {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "QUANTIDADE", nullable = false)
-    private BigDecimal quantidade;
+    @Column(name = "T$", nullable = false)
+    private int tibar;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 2, nullable = false)
-    private MoedaEnum moeda;
+    @Column(name = "TP", nullable = false)
+    private int tibarPrata;
+
+    @Column(name = "TO", nullable = false)
+    private int tibarOuro;
+
+    @Column(name = "TL", nullable = false)
+    private int tibarPlatina;
 
     public Moeda() {
         /** Construtor Vazio */
     }
 
-    public Moeda(MoedaEnum moeda, BigDecimal quantidade) {
-        this.quantidade = quantidade;
-        this.moeda = moeda;
+    public Moeda(int tibar, int tibarPrata, int tibarOuro, int tibarPlatina) {
+        this.tibar = tibar;
+        this.tibarPrata = tibarPrata;
+        this.tibarOuro = tibarOuro;
+        this.tibarPlatina = tibarPlatina;
     }
 
     public Long getId() {
@@ -41,20 +48,45 @@ public class Moeda {
         this.id = id;
     }
 
-    public BigDecimal getQuantidade() {
-        return quantidade;
+    public int getTibar() {
+        return tibar;
     }
 
-    public void setQuantidade(BigDecimal quantidade) {
-        this.quantidade = quantidade;
+    public void setTibar(int tibar) {
+        this.tibar = tibar;
     }
 
-    public MoedaEnum getMoeda() {
-        return moeda;
+    public int getTibarPrata() {
+        return tibarPrata;
     }
 
-    public void setMoeda(MoedaEnum moeda) {
-        this.moeda = moeda;
+    public void setTibarPrata(int tibarPrata) {
+        this.tibarPrata = tibarPrata;
     }
 
+    public int getTibarOuro() {
+        return tibarOuro;
+    }
+
+    public void setTibarOuro(int tibarOuro) {
+        this.tibarOuro = tibarOuro;
+    }
+
+    public int getTibarPlatina() {
+        return tibarPlatina;
+    }
+
+    public void setTibarPlatina(int tibarPlatina) {
+        this.tibarPlatina = tibarPlatina;
+    }
+
+    @Override
+    public String toString() {
+        return "Moeda{" +
+                "tibar=" + tibar +
+                ", tibarPrata=" + tibarPrata +
+                ", tibarOuro=" + tibarOuro +
+                ", tibarPlatina=" + tibarPlatina +
+                '}';
+    }
 }

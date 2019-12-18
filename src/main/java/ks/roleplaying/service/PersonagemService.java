@@ -38,6 +38,9 @@ public class PersonagemService {
     private MoedaRepository moedaRepository;
 
     @Autowired
+    private MoedaService moedaService;
+
+    @Autowired
     private HabilidadeService habilidadeService;
 
     @Autowired
@@ -78,6 +81,9 @@ public class PersonagemService {
             personagem.setTendencia(tendencia);
 
             Moeda moeda = gerarMoeda();
+
+            moedaService.atualizarMoeda(moeda);
+
             moedaRepository.save(moeda);
             personagem.setMoeda(moeda);
 
@@ -131,8 +137,15 @@ public class PersonagemService {
     }
 
     private Moeda gerarMoeda() {
+        int qtd = random.nextInt(100);
         int number = random.nextInt(MoedaEnum.values().length);
-        return new Moeda(MoedaEnum.getByCodigo(number == 0 ? 1 : number), BigDecimal.valueOf(100));
+        String tipoMoeda = MoedaEnum.getByCodigo(number == 0 ? 1 : number).name();
+
+        return new Moeda(tipoMoeda.equalsIgnoreCase(MoedaEnum.T$.name()) ? qtd : 0,
+                tipoMoeda.equalsIgnoreCase(MoedaEnum.TP.name()) ? qtd : 0,
+                tipoMoeda.equalsIgnoreCase(MoedaEnum.TO.name()) ? qtd : 0,
+                tipoMoeda.equalsIgnoreCase(MoedaEnum.TL.name()) ? qtd : 0
+        );
     }
 
     private Atributos obterAtributosFront(Personagem personagem) {
