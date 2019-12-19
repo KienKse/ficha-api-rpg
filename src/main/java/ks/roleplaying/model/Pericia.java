@@ -15,7 +15,7 @@ public class Pericia {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NOME", nullable = false)
+    @Column(name = "NOME", nullable = false, unique = true)
     private String nome;
 
     @Column(name = "HABILIDADE_CHAVE", nullable = false)
