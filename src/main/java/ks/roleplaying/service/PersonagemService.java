@@ -29,7 +29,7 @@ public class PersonagemService {
     private InventarioRepository inventarioRepository;
 
     @Autowired
-    private AtributosRepository atributosRepository;
+    private AtributoService atributoService;
 
     @Autowired
     private TendenciaRepository tendenciaRepository;
@@ -113,7 +113,9 @@ public class PersonagemService {
 
         Atributos atributos = personagem.isGerarAtributosETendencia() ? atributosBasicos() : obterAtributosFront(request);
 
-        atributosRepository.save(atributos);
+        atributoService.atualizarModificadores(atributos);
+
+        atributoService.save(atributos);
 
         personagem.setAtributos(atributos);
 
