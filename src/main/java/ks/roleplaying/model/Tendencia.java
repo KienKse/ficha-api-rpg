@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-//@Table(name = "TENDENCIA", schema = "rpg")
-@Table(name = "TENDENCIA")
+@Table(name = "TENDENCIA", schema = "rpg")
+//@Table(name = "TENDENCIA")
 @EntityListeners(AuditingEntityListener.class)
 public class Tendencia {
 

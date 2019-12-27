@@ -5,8 +5,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 
 @Entity
-//@Table(name = "TALENTO", schema = "rpg")
-@Table(name = "TALENTO")
+@Table(name = "TALENTO", schema = "rpg")
+//@Table(name = "TALENTO")
 @EntityListeners(AuditingEntityListener.class)
 public class Talento {
 

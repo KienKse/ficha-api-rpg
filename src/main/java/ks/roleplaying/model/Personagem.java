@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Table(name = "PERSONAGEM", schema = "rpg")
-@Table(name = "PERSONAGEM")
+@Table(name = "PERSONAGEM", schema = "rpg")
+//@Table(name = "PERSONAGEM")
 @EntityListeners(AuditingEntityListener.class)
 public class Personagem implements Serializable {
     /**

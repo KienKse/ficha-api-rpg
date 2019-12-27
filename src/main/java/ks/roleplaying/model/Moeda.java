@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-//@Table(name = "MOEDA", schema = "rpg")
-@Table(name = "MOEDA")
+@Table(name = "MOEDA", schema = "rpg")
+//@Table(name = "MOEDA")
 @EntityListeners(AuditingEntityListener.class)
 public class Moeda {
 
@@ -17,16 +17,16 @@ public class Moeda {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "T$", nullable = false)
+    @Column(name = "TIBAR", nullable = false)
     private int tibar;
 
-    @Column(name = "TP", nullable = false)
+    @Column(name = "TIBAR_PRATA", nullable = false)
     private int tibarPrata;
 
-    @Column(name = "TO", nullable = false)
+    @Column(name = "TIBAR_OURO", nullable = false)
     private int tibarOuro;
 
-    @Column(name = "TL", nullable = false)
+    @Column(name = "TIBAR_PLATINA", nullable = false)
     private int tibarPlatina;
 
     public Moeda() {
