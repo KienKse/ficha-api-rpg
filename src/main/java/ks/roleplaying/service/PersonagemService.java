@@ -41,15 +41,6 @@ public class PersonagemService {
     private MoedaService moedaService;
 
     @Autowired
-    private HabilidadeService habilidadeService;
-
-    @Autowired
-    private TalentoService talentoService;
-
-    @Autowired
-    private PericiaService periciaService;
-
-    @Autowired
     private ItemService itemService;
 
     private static Random random = new Random();
@@ -62,6 +53,10 @@ public class PersonagemService {
     @Transactional
     public Personagem addNewPersonagem(Personagem request) {
         Personagem personagem = new Personagem(request);
+
+        Atributos atributos = null;
+        Tendencia tendencia = null;
+        Moeda moeda = null;
 
         if(personagem.isGerarAtributosETendencia()) {
             Item padrao = itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN);
@@ -76,16 +71,9 @@ public class PersonagemService {
             personagem.getInventarioItens().add(inventarioItem);
             personagem.getInventarioItens().add(inventarioItem2);
 
-            Tendencia tendencia = gerarTendencia();
-            tendenciaRepository.save(tendencia);
-            personagem.setTendencia(tendencia);
+            tendencia = gerarTendencia();
 
-            Moeda moeda = gerarMoeda();
-
-            moedaService.atualizarMoeda(moeda);
-
-            moedaRepository.save(moeda);
-            personagem.setMoeda(moeda);
+            moeda = gerarMoeda();
 
             Habilidade habilidade = new Habilidade("Abençoar Água", "Divina 1 (cura)","Esta magia imbui um frasco d’água com energia positiva, transformando-a em água benta (veja o Capítulo 7: Equipamento). Componente material: 2,5kg de prata em pó (no valor de 25 TO).");
 
@@ -95,27 +83,33 @@ public class PersonagemService {
                     "quando você lança uma magia, pode gastar uma ação de movimento para entoar um canto litúrgico. Se fizer isso, a CD para resistir à magia aumenta em +1. Você pode usar este talento um número de vezes por dia igual ao seu bônus de Carisma +1. Obviamente, você não pode lançar magias desta forma se não puder fazer sons (por exemplo, sob efeito de Magia Silenciosa).",
                     "[Manual do Devoto pg. 44] Você foi treinado em um mosteiro, onde rezava através de belos cânticos.");
 
-//            talentoService.addNewTalento(t1);
-
             personagem.getTalentos().add(t1);
 
             Pericia p1 = new Pericia("Domesticar um animal selvagem", "Adestrar Animais",
                     "Carisma", 25, "Você pode criar um animal selvagem desde filhote, " +
                     "domesticando-o. O tempo necessário varia de acordo com a criatura.");
 
-//            periciaService.addNewPericia(p1);
-
             personagem.getPericias().add(p1);
 
+            atributos = atributosBasicos();
+
         } else {
+
             personagem.getInventarioItens().forEach(this::adicionarInventarioItem);
+
         }
 
-        Atributos atributos = personagem.isGerarAtributosETendencia() ? atributosBasicos() : obterAtributosFront(request);
+        moedaRepository.save(moeda);
+        personagem.setMoeda(moeda);
+
+        personagem.setTendencia(tendencia);
+        tendenciaRepository.save(tendencia);
 
         atributoService.atualizarModificadores(atributos);
 
         atributoService.save(atributos);
+
+        moedaService.atualizarMoeda(moeda);
 
         personagem.setAtributos(atributos);
 
@@ -127,10 +121,6 @@ public class PersonagemService {
         if(item != null) {
             inventarioRepository.save(inventarioItem);
         }
-    }
-
-    private Tendencia obterTendenciaFront(Personagem personagem) {
-        return personagem.getTendencia();
     }
 
     private Tendencia gerarTendencia() {
@@ -148,10 +138,6 @@ public class PersonagemService {
                 tipoMoeda.equalsIgnoreCase(MoedaEnum.TO.name()) ? qtd : 0,
                 tipoMoeda.equalsIgnoreCase(MoedaEnum.TL.name()) ? qtd : 0
         );
-    }
-
-    private Atributos obterAtributosFront(Personagem personagem) {
-        return personagem.getAtributos();
     }
 
     private Atributos atributosBasicos() {
