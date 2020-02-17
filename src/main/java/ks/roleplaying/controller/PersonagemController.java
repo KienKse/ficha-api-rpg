@@ -19,13 +19,11 @@ public class PersonagemController {
     @Autowired
     private PersonagemService personagemService;
 
-    // Get ALL - Personagem
     @GetMapping("")
     public List<Personagem> getAll() {
         return personagemService.getAll();
     }
 
-    // Add Personagem
     @PostMapping("/add")
     @Transactional
     public ResponseEntity addNewPersonagem(@Valid @RequestBody Personagem request) {
@@ -36,14 +34,12 @@ public class PersonagemController {
         }
     }
 
-    // Get - Personagem
     @GetMapping("/{id}")
     public @ResponseBody
     Personagem getPersonagemById(@PathVariable(value = "id") Long personagemId) {
         return personagemService.getPersonagemById(personagemId);
     }
 
-    // Delete - Personagem
     @DeleteMapping("/{id}")
     public @ResponseBody
     ResponseEntity<?> deletePersonagem(@PathVariable(value = "id") Long personagemId) {
@@ -52,7 +48,6 @@ public class PersonagemController {
         return ResponseEntity.ok().build();
     }
 
-    // Update Personagem
     @PutMapping("/upd/{id}")
     public ResponseEntity<Personagem> updatePersonagem(@RequestBody Personagem personagem, @PathVariable Long id){
 

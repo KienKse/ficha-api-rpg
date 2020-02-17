@@ -21,14 +21,12 @@ public class TalentoController {
     @Autowired
     private TalentoService talentoService;
 
-    // Get ALL - Talento
     @GetMapping("")
     @ApiOperation(value = "Obter todos as talentos")
     public List<Talento> getAll() {
         return talentoService.getAll();
     }
 
-    // Add Talento
     @PostMapping("/add")
     @ApiOperation(value = "Adicionar um talento")
     public ResponseEntity addNewTalento(@Valid @RequestBody Talento request) {
@@ -39,7 +37,6 @@ public class TalentoController {
         }
     }
 
-    // AddAll Talento
     @PostMapping("/addList")
     @ApiOperation(value = "Adicionar uma lista de talentos")
     public void addListTalento(@RequestBody List<Talento> talentos) {
@@ -54,14 +51,12 @@ public class TalentoController {
         }
     }
 
-    // Get - Talento
     @GetMapping("/{id}")
     @ApiOperation(value = "Obter um talento pelo ID")
     public @ResponseBody Talento getTalentoById(@PathVariable(value = "id") Long talentoId) {
         return talentoService.getTalentoById(talentoId);
     }
 
-    // Delete - Talento
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletar um talento pelo ID")
     public @ResponseBody ResponseEntity<?> deleteTalento(@PathVariable(value = "id") Long talentoId) {
@@ -71,7 +66,6 @@ public class TalentoController {
         return ResponseEntity.ok().build();
     }
 
-    // Update Talento
     @PutMapping("/upd/{id}")
     @ApiOperation(value = "Atualizar um talento pelo ID")
     public ResponseEntity<Talento> updateTalento(@RequestBody Talento talento, @PathVariable Long id){

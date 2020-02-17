@@ -25,14 +25,12 @@ public class ItemController {
     @Autowired
     private ItemService itemService;
 
-    // Get ALL - Item
     @GetMapping("")
     @ApiOperation(value = "Obter todos os itens ")
     public List<Item> getAll() {
         return itemService.getAll();
     }
 
-    // Add Item
     @PostMapping("/add")
     @ApiOperation(value = "Adicionar um item")
     public ResponseEntity addNewItem(@Valid @RequestBody Item request) {
@@ -43,7 +41,6 @@ public class ItemController {
         }
     }
 
-    // AddAll Item
     @PostMapping("/addList")
     @ApiOperation(value = "Adicionar uma lista itens")
     public void addListItens(@Valid @RequestBody List<Item> itens) {
@@ -58,7 +55,6 @@ public class ItemController {
         }
     }
 
-    // Get - Item
     @GetMapping("/{id}")
     @ApiOperation(value = "Obter um item pelo ID")
     public @ResponseBody
@@ -66,7 +62,6 @@ public class ItemController {
         return itemService.getItemById(itemId);
     }
 
-    // Delete - Item
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletar um item pelo ID")
     public @ResponseBody
@@ -77,7 +72,6 @@ public class ItemController {
         return ResponseEntity.ok().build();
     }
 
-    // Update Item
     @PutMapping("/upd/{id}")
     @ApiOperation(value = "Atualizar um item pelo ID")
     public ResponseEntity<Item> updateItem(@RequestBody Item item, @PathVariable Long id){

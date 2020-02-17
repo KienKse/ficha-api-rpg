@@ -35,6 +35,7 @@ public class InventarioItemController {
         Personagem personagem = personagemService.getPersonagemById(personagemId);
         Item item = itemService.getItemByNome(request.getItem().getNome());
         if(personagem != null && item != null) {
+            //TODO: FIX ADD ITEM
             InventarioItem inventarioItem =  personagem.getInventarioItens()
             .stream()
             .filter(inventario-> inventario.getItem() == item)

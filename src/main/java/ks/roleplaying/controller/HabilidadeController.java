@@ -21,14 +21,12 @@ public class HabilidadeController {
     @Autowired
     private HabilidadeService habilidadeService;
 
-    // Get ALL - Habilidade
     @GetMapping("")
     @ApiOperation(value = "Obter todos as habilidades")
     public List<Habilidade> getAll() {
         return habilidadeService.getAll();
     }
 
-    // Add Habilidade
     @PostMapping("/add")
     @ApiOperation(value = "Adicionar uma habilidade")
     public ResponseEntity addNewHabilidade(@Valid @RequestBody Habilidade request) {
@@ -39,7 +37,6 @@ public class HabilidadeController {
         }
     }
 
-    // AddAll Habilidade
     @PostMapping("/addList")
     @ApiOperation(value = "Adicionar uma lista de habilidades")
     public void addListHabilidade(@RequestBody List<Habilidade> habilidades) {
@@ -54,14 +51,12 @@ public class HabilidadeController {
         }
     }
 
-    // Get - Habilidade
     @GetMapping("/{id}")
     @ApiOperation(value = "Obter uma habilidade pelo ID")
     public @ResponseBody Habilidade getHabilidadeById(@PathVariable(value = "id") Long habilidadeId) {
         return habilidadeService.getHabilidadeById(habilidadeId);
     }
 
-    // Delete - Habilidade
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletar uma habilidade pelo ID")
     public @ResponseBody ResponseEntity<?> deleteHabilidade(@PathVariable(value = "id") Long habilidadeId) {
@@ -71,7 +66,6 @@ public class HabilidadeController {
         return ResponseEntity.ok().build();
     }
 
-    // Update Habilidade
     @PutMapping("/upd/{id}")
     @ApiOperation(value = "Atualizar uma habilidade pelo ID")
     public ResponseEntity<Habilidade> updateHabilidade(@RequestBody Habilidade habilidade, @PathVariable Long id){

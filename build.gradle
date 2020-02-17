@@ -26,7 +26,6 @@ repositories {
 }
 
 dependencies {
-//	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.9.Final'
 	compile group: 'com.h2database', name: 'h2', version: '1.4.199'
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
 	compile('io.springfox:springfox-swagger2:2.9.2')

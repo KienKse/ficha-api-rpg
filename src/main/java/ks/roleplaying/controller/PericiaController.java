@@ -21,14 +21,12 @@ public class PericiaController {
     @Autowired
     private PericiaService periciaService;
 
-    // Get ALL - Pericia
     @GetMapping("")
     @ApiOperation(value = "Obter todos as pericias")
     public List<Pericia> getAll() {
         return periciaService.getAll();
     }
 
-    // Add Pericia
     @PostMapping("/add")
     @ApiOperation(value = "Adicionar uma pericia")
     public ResponseEntity addNewPericia(@Valid @RequestBody Pericia request) {
@@ -39,7 +37,6 @@ public class PericiaController {
         }
     }
 
-    // AddAll Pericia
     @PostMapping("/addList")
     @ApiOperation(value = "Adicionar uma lista de pericias")
     public void addListPericia(@RequestBody List<Pericia> pericias) {
@@ -54,14 +51,12 @@ public class PericiaController {
         }
     }
 
-    // Get - Pericia
     @GetMapping("/{id}")
     @ApiOperation(value = "Obter uma pericia pelo ID")
     public @ResponseBody Pericia getPericiaById(@PathVariable(value = "id") Long periciaId) {
         return periciaService.getPericiaById(periciaId);
     }
 
-    // Delete - Pericia
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletar uma pericia pelo ID")
     public @ResponseBody ResponseEntity<?> deletePericia(@PathVariable(value = "id") Long periciaId) {
@@ -71,7 +66,6 @@ public class PericiaController {
         return ResponseEntity.ok().build();
     }
 
-    // Update Pericia
     @PutMapping("/upd/{id}")
     @ApiOperation(value = "Atualizar uma pericia pelo ID")
     public ResponseEntity<Pericia> updatePericia(@RequestBody Pericia pericia, @PathVariable Long id){
