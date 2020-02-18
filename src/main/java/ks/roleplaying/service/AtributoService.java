@@ -19,15 +19,6 @@ public class AtributoService {
     @Autowired
     private AtributosRepository atributosRepository;
 
-    /***
-     *    Valores de Elite - Modulo Básico
-     *    pagina 26
-     *    17 - 15 - 13 - 12 - 10 - 8
-     *
-     *    Atributos Básicos
-     *    Tabela 1-1:
-     *    Modificadores de Atributo
-     */
     public void atualizarModificadores(Atributos atributos) {
         atributos.setModificadorForca(calcularModificador(atributos.getForca()));
         atributos.setModificadorCarisma(calcularModificador(atributos.getCarisma()));
