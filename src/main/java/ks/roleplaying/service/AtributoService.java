@@ -19,15 +19,6 @@ public class AtributoService {
     @Autowired
     private AtributosRepository atributosRepository;
 
-    public void atualizarModificadores(Atributos atributos) {
-        atributos.setModificadorForca(calcularModificador(atributos.getForca()));
-        atributos.setModificadorCarisma(calcularModificador(atributos.getCarisma()));
-        atributos.setModificadorConstituicao(calcularModificador(atributos.getConstituicao()));
-        atributos.setModificadorDestreza(calcularModificador(atributos.getDestreza()));
-        atributos.setModificadorInteligencia(calcularModificador(atributos.getInteligencia()));
-        atributos.setModificadorSabedoria(calcularModificador(atributos.getSabedoria()));
-    }
-
     public Integer calcularModificador(Integer atributo) {
         if(atributo < NUMERO_BASE) {
             return (int) Math.ceil((atributo-NUMERO_BASE)/2);
@@ -36,6 +27,13 @@ public class AtributoService {
     }
 
     public Atributos save(Atributos atributos) {
+        atributos.setModificadorForca(calcularModificador(atributos.getForca()));
+        atributos.setModificadorCarisma(calcularModificador(atributos.getCarisma()));
+        atributos.setModificadorConstituicao(calcularModificador(atributos.getConstituicao()));
+        atributos.setModificadorDestreza(calcularModificador(atributos.getDestreza()));
+        atributos.setModificadorInteligencia(calcularModificador(atributos.getInteligencia()));
+        atributos.setModificadorSabedoria(calcularModificador(atributos.getSabedoria()));
+
         return atributosRepository.save(atributos);
     }
 
@@ -47,8 +45,6 @@ public class AtributoService {
         }
 
         atributoDetails.setId(atributoId);
-
-        atualizarModificadores(atributoDetails);
 
         atributosRepository.save(atributoDetails);
 

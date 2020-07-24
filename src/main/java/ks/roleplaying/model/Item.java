@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ITEM", schema = "rpg")
+@Table(name = "ITEM", schema = "rpg", uniqueConstraints=@UniqueConstraint(columnNames="NOME"))
 //@Table(name = "ITEM")
 @EntityListeners(AuditingEntityListener.class)
 public class Item {
@@ -16,7 +16,7 @@ public class Item {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NOME", nullable = false)
+    @Column(name = "NOME", unique = true, nullable = false)
     private String nome;
 
     @Column(name = "PESO")

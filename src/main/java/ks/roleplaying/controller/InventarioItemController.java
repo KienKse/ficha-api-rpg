@@ -25,7 +25,7 @@ public class InventarioItemController {
 
     @Autowired
     private InventarioItemService inventarioItemService;
-
+/*
     @PostMapping("/addItemPersonagem/{id}")
     public ResponseEntity addNewInventarioItem(@Valid @RequestBody InventarioItem request, @PathVariable(value = "id") Long personagemId) {
         return adicionarInventarioItem(request, personagemId);
@@ -67,5 +67,5 @@ public class InventarioItemController {
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Ocorreu algum erro");
     }
-
+*/
 }

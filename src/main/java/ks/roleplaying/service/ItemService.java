@@ -26,14 +26,13 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Item addNewItem(Item request) {
-        Item item = new Item(request);
-
-        return itemRepository.save(item);
-    }
-
     public Item addNewItemCarga(String nome, BigDecimal peso, BigDecimal preco) {
-        return itemRepository.save(new Item(nome, peso, preco));
+        Item item = getItemByNome(nome);
+        //TODO: FIX REFATORAR
+        if(item == null) {
+            return itemRepository.save(new Item(nome, peso, preco));
+        }
+        return null;
     }
 
     public Item getItemById(Long itemId) {

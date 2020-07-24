@@ -1,7 +1,5 @@
 package ks.roleplaying.enums;
 
-import ks.roleplaying.model.Tendencia;
-
 import java.util.Arrays;
 
 public enum TendenciaEnum {

@@ -35,7 +35,7 @@ public class ItemController {
     @ApiOperation(value = "Adicionar um item")
     public ResponseEntity addNewItem(@Valid @RequestBody Item request) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(itemService.addNewItem(request));
+            return ResponseEntity.status(HttpStatus.OK).body(itemService.addNewItemCarga(request.getNome(), request.getPeso(), request.getPreco()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -49,7 +49,7 @@ public class ItemController {
 
     private void adicionarItens(Item item) {
         try {
-             this.itemService.addNewItem(item);
+             this.itemService.addNewItemCarga(item.getNome(), item.getPeso(), item.getPreco());
         } catch (Exception e) {
             System.out.println("Exceção: " + e.getLocalizedMessage());
         }

@@ -15,9 +15,6 @@ import java.util.List;
 //@Table(name = "PERSONAGEM")
 @EntityListeners(AuditingEntityListener.class)
 public class Personagem implements Serializable {
-    /**
-     * Ícaro Santana
-     */
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,47 +24,16 @@ public class Personagem implements Serializable {
     @Column(name = "NOME", nullable = false, length = 65)
     private String nome;
 
-    @Column(name = "NIVEL", nullable = false)
-    private Integer nivel;
-
     @Column(name = "RACA", nullable = false, length = 45)
     private String raca;
 
     @Column(name = "CLASSE", nullable = false, length = 45)
     private String classe;
 
-    @JoinColumn(name = "ID_TENDENCIA_FK", referencedColumnName = "ID")
-    @ManyToOne
-    private Tendencia tendencia;
-
-    @JoinColumn(name = "ID_MOEDA_FK", referencedColumnName = "ID")
-    @ManyToOne
-    private Moeda moeda;
-
-    @Transient
-    private BigDecimal cargaMaxima;
-
-    @Transient
-    private BigDecimal cargaAtual;
-
     @JoinColumn(name = "ID_PERSONAGEM_FK", referencedColumnName = "ID")
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<InventarioItem> inventarioItens;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name="personagem_talentos", joinColumns=
-            {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
-            {@JoinColumn(name="ID_TALENTO")})
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Talento> talentos;
-
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @Fetch(value = FetchMode.SUBSELECT)
-    @JoinTable(name="personagem_pericicas", joinColumns=
-            {@JoinColumn(name="ID_PERSONAGEM")}, inverseJoinColumns=
-            {@JoinColumn(name="ID_PERICIA")})
-    private List<Pericia> pericias;
 
     @OneToOne
     @JoinColumn(name = "ID_ATRIBUTO_FK", referencedColumnName = "ID")
@@ -80,8 +46,17 @@ public class Personagem implements Serializable {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Habilidade> habilidades;
 
+    @Column(name = "SANIDADE", nullable = false)
+    private Integer sanidade = 0;
+
+    @Column(name = "GOLD", nullable = false)
+    private Integer gold = 0;
+
     @Transient
-    private boolean gerarAtributosETendencia;
+    private BigDecimal cargaMaxima = BigDecimal.ZERO;
+
+    @Transient
+    private BigDecimal cargaAtual = BigDecimal.ZERO;
 
     public Personagem() {
         /** Construtor Vazio */
@@ -89,20 +64,11 @@ public class Personagem implements Serializable {
 
     public Personagem(Personagem request) {
         this.nome = request.nome;
-        this.nivel = request.nivel;
         this.raca = request.raca;
         this.classe = request.classe;
         this.atributos = request.atributos;
         this.habilidades = request.habilidades;
-        this.pericias = request.pericias;
-        this.talentos = request.talentos;
         this.inventarioItens = request.inventarioItens;
-        this.moeda = request.moeda;
-        this.gerarAtributosETendencia = request.gerarAtributosETendencia;
-    }
-
-    public boolean isGerarAtributosETendencia() {
-        return gerarAtributosETendencia;
     }
 
     public BigDecimal getCargaMaxima() {
@@ -118,6 +84,20 @@ public class Personagem implements Serializable {
     private void atribuirCarga(InventarioItem inventarioItem) {
         if(inventarioItem.getItem().getPeso() != null)
             cargaAtual = cargaAtual.add(inventarioItem.getItem().getPeso().multiply(BigDecimal.valueOf(inventarioItem.getQuantidade())));
+    }
+
+    public List<Habilidade> getHabilidades() {
+        if(habilidades == null) {
+            habilidades = new ArrayList<>();
+        }
+        return habilidades;
+    }
+
+    public List<InventarioItem> getInventarioItens() {
+        if(inventarioItens == null) {
+            inventarioItens = new ArrayList<>();
+        }
+        return inventarioItens;
     }
 
     public Long getId() {
@@ -136,14 +116,6 @@ public class Personagem implements Serializable {
         this.nome = nome;
     }
 
-    public Integer getNivel() {
-        return nivel;
-    }
-
-    public void setNivel(Integer nivel) {
-        this.nivel = nivel;
-    }
-
     public String getRaca() {
         return raca;
     }
@@ -160,6 +132,10 @@ public class Personagem implements Serializable {
         this.classe = classe;
     }
 
+    public void setInventarioItens(List<InventarioItem> inventarioItens) {
+        this.inventarioItens = inventarioItens;
+    }
+
     public Atributos getAtributos() {
         return atributos;
     }
@@ -168,63 +144,43 @@ public class Personagem implements Serializable {
         this.atributos = atributos;
     }
 
-    public List<Habilidade> getHabilidades() {
-        if(habilidades == null) {
-            habilidades = new ArrayList<>();
-        }
-        return habilidades;
-    }
-
-    public Tendencia getTendencia() {
-        return tendencia;
-    }
-
-    public void setTendencia(Tendencia tendencia) {
-        this.tendencia = tendencia;
-    }
-
     public void setHabilidades(List<Habilidade> habilidades) {
         this.habilidades = habilidades;
     }
 
-    public List<InventarioItem> getInventarioItens() {
-        if(inventarioItens == null) {
-            inventarioItens = new ArrayList<>();
-        }
-        return inventarioItens;
+    public Integer getSanidade() {
+        return sanidade;
     }
 
-    public void setInventarioItens(List<InventarioItem> inventarioItens) {
-        this.inventarioItens = inventarioItens;
+    public void setSanidade(Integer sanidade) {
+        this.sanidade = sanidade;
     }
 
-    public List<Talento> getTalentos() {
-        if(talentos == null) {
-            talentos = new ArrayList<>();
-        }
-        return talentos;
+    public Integer getGold() {
+        return gold;
     }
 
-    public void setTalentos(List<Talento> talentos) {
-        this.talentos = talentos;
+    public void setGold(Integer gold) {
+        this.gold = gold;
     }
 
-    public List<Pericia> getPericias() {
-        if(pericias == null) {
-            pericias = new ArrayList<>();
-        }
-        return pericias;
+    public void setCargaMaxima(BigDecimal cargaMaxima) {
+        this.cargaMaxima = cargaMaxima;
     }
 
-    public void setPericias(List<Pericia> pericias) {
-        this.pericias = pericias;
+    public void setCargaAtual(BigDecimal cargaAtual) {
+        this.cargaAtual = cargaAtual;
     }
 
-    public Moeda getMoeda() {
-        return moeda;
-    }
-
-    public void setMoeda(Moeda moeda) {
-        this.moeda = moeda;
+    @Override
+    public String toString() {
+        return "Personagem{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", raca='" + raca + '\'' +
+                ", classe='" + classe + '\'' +
+                ", sanidade=" + sanidade +
+                ", gold=" + gold +
+                '}';
     }
 }

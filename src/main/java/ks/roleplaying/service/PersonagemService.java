@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -32,119 +33,83 @@ public class PersonagemService {
     private AtributoService atributoService;
 
     @Autowired
-    private TendenciaRepository tendenciaRepository;
-
-    @Autowired
-    private MoedaRepository moedaRepository;
-
-    @Autowired
-    private MoedaService moedaService;
-
-    @Autowired
     private ItemService itemService;
 
-    private static Random random = new Random();
+    @Autowired
+    private HabilidadeService habilidadeService;
 
-    public List<Personagem> getAll() {
-        LOGGER.debug("Obtendo personagens");
-        return personagemRepository.findAll();
-    }
+    private static Random random = new Random();
 
     @Transactional
     public Personagem addNewPersonagem(Personagem request) {
         Personagem personagem = new Personagem(request);
 
-        Atributos atributos = null;
-        Tendencia tendencia = null;
-        Moeda moeda = null;
+        //TODO: REMOVER TESTE
+        if(itemService.getAll().size() < 1) {
+            itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN);
+            itemService.addNewItemCarga("Poção de MP", BigDecimal.TEN.add(BigDecimal.ONE), BigDecimal.TEN.add(BigDecimal.ONE));
+        }
+        if(habilidadeService.getAll().size() < 1) {
+            habilidadeService.addNewHabilidade(new Habilidade("Teste", "Instantaneo", "Um alvo",
+                    "testar as coisas", "2 turnos", 2, "testar"));
 
-        if(personagem.isGerarAtributosETendencia()) {
-            Item padrao = itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN);
-            Item padrao2 = itemService.addNewItemCarga("Poção de MP", BigDecimal.valueOf(4), BigDecimal.TEN);
-
-            InventarioItem inventarioItem = new InventarioItem(padrao, 2);
-            InventarioItem inventarioItem2 = new InventarioItem(padrao2, 1);
-
-            inventarioRepository.save(inventarioItem);
-            inventarioRepository.save(inventarioItem2);
-
-            personagem.getInventarioItens().add(inventarioItem);
-            personagem.getInventarioItens().add(inventarioItem2);
-
-            tendencia = gerarTendencia();
-
-            moeda = gerarMoeda();
-
-            Habilidade habilidade = new Habilidade("Abençoar Água", "Divina 1 (cura)","Esta magia imbui um frasco d’água com energia positiva, transformando-a em água benta (veja o Capítulo 7: Equipamento). Componente material: 2,5kg de prata em pó (no valor de 25 TO).");
-
-            personagem.getHabilidades().add(habilidade);
-
-            Talento t1 = new Talento("Canto Monástico", "treinado em Atuação (música), capacidade de lançar magias divinas.",
-                    "quando você lança uma magia, pode gastar uma ação de movimento para entoar um canto litúrgico. Se fizer isso, a CD para resistir à magia aumenta em +1. Você pode usar este talento um número de vezes por dia igual ao seu bônus de Carisma +1. Obviamente, você não pode lançar magias desta forma se não puder fazer sons (por exemplo, sob efeito de Magia Silenciosa).",
-                    "[Manual do Devoto pg. 44] Você foi treinado em um mosteiro, onde rezava através de belos cânticos.");
-
-            personagem.getTalentos().add(t1);
-
-            Pericia p1 = new Pericia("Domesticar um animal selvagem", "Adestrar Animais",
-                    "Carisma", 25, "Você pode criar um animal selvagem desde filhote, " +
-                    "domesticando-o. O tempo necessário varia de acordo com a criatura.");
-
-            personagem.getPericias().add(p1);
-
-            atributos = atributosBasicos();
-
-        } else {
-
-            personagem.getInventarioItens().forEach(this::adicionarInventarioItem);
-
+            habilidadeService.addNewHabilidade(new Habilidade("Teste Supremo", "1 turno", "Em area",
+                    "testar as coisas supremamente", "1 turnos", 5, "testar no modo hard"));
         }
 
-        moedaRepository.save(moeda);
-        personagem.setMoeda(moeda);
+        personagem.setInventarioItens(request.getInventarioItens());
 
-        personagem.setTendencia(tendencia);
-        tendenciaRepository.save(tendencia);
+        verificarHabilidades(personagem, request.getHabilidades());
 
-        atributoService.atualizarModificadores(atributos);
+        Atributos atributos = null;
+        atributos = request.getAtributos();
+//      GERAR ATRIBUTOS ALEATORIOS > DESCOMENTAR LINHA ABAIXO
+//        atributos = atributosBasicos();
+
+        personagem.getInventarioItens().forEach(this::adicionarInventarioItem);
 
         atributoService.save(atributos);
-
-        moedaService.atualizarMoeda(moeda);
 
         personagem.setAtributos(atributos);
 
         return personagemRepository.save(personagem);
     }
 
-    private void adicionarInventarioItem(InventarioItem inventarioItem) {
-        Item item = itemService.getItemById(inventarioItem.getItem().getId());
-        if(item != null) {
-            inventarioRepository.save(inventarioItem);
+    private void verificarHabilidades(Personagem personagem, List<Habilidade> habilidades) {
+        personagem.setHabilidades(new ArrayList<>());
+        Habilidade habilidadeBanco;
+        for (Habilidade habilidade: habilidades) {
+            habilidadeBanco = habilidadeService.getHabilidadeById(habilidade.getId());
+            if(habilidadeBanco != null) {
+                personagem.getHabilidades().add(habilidadeBanco);
+            } else {
+                throw new ResourceNotFoundException(habilidade.getNome());
+            }
         }
     }
 
-    private Tendencia gerarTendencia() {
-        int number = random.nextInt(TendenciaEnum.values().length);
-        return new Tendencia(TendenciaEnum.getByCodigo(number == 0 ? 1 : number));
-    }
-
-    private Moeda gerarMoeda() {
-        int qtd = random.nextInt(100);
-        int number = random.nextInt(MoedaEnum.values().length);
-        String tipoMoeda = MoedaEnum.getByCodigo(number == 0 ? 1 : number).name();
-
-        return new Moeda(tipoMoeda.equalsIgnoreCase(MoedaEnum.T$.name()) ? qtd : 0,
-                tipoMoeda.equalsIgnoreCase(MoedaEnum.TP.name()) ? qtd : 0,
-                tipoMoeda.equalsIgnoreCase(MoedaEnum.TO.name()) ? qtd : 0,
-                tipoMoeda.equalsIgnoreCase(MoedaEnum.TL.name()) ? qtd : 0
-        );
+    private void adicionarInventarioItem(InventarioItem inventarioItem) {
+        Item item = itemService.getItemById(inventarioItem.getItem().getId());
+        if(item != null) {
+            inventarioItem.setItem(item);
+            inventarioRepository.save(inventarioItem);
+        }
     }
 
     private Atributos atributosBasicos() {
         return new Atributos(diceRoll(), diceRoll(), diceRoll(), diceRoll(), diceRoll(), diceRoll());
     }
 
+    public List<Personagem> getAll() {
+        LOGGER.debug("Obtendo personagens");
+        return this.personagemRepository.findAllPersonagem()
+                .orElseThrow(() -> new ResourceNotFoundException("ALL PERSONAGEM"));
+    }
+
     public Personagem getPersonagemById(Long personagemId) {
+        // Resolução de parte do "problema" do LAZY considerando a entidade Inventario Item
+//        return personagemRepository.findPersonagem(personagemId)
+//                .orElseThrow(() -> new ResourceNotFoundException("PERSONAGEM", "id", personagemId));
         return personagemRepository.findById(personagemId)
                 .orElseThrow(() -> new ResourceNotFoundException("PERSONAGEM", "id", personagemId));
     }

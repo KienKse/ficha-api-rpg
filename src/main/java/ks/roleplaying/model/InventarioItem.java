@@ -24,9 +24,6 @@ public class InventarioItem implements Serializable {
     @Column(name = "quantidade", nullable = false)
     private Integer quantidade;
 
-    @Transient
-    private boolean adicionar;
-
     public InventarioItem() {
         /** Construtor Vazio */
     }
@@ -40,7 +37,6 @@ public class InventarioItem implements Serializable {
     public InventarioItem(InventarioItem request) {
         this.item =  request.item;
         this.quantidade = request.quantidade;
-        this.adicionar = request.adicionar;
     }
 
     public Long getId() {
@@ -67,11 +63,4 @@ public class InventarioItem implements Serializable {
         this.quantidade = quantidade;
     }
 
-    public boolean isAdicionar() {
-        return adicionar;
-    }
-
-    public void setAdicionar(boolean adicionar) {
-        this.adicionar = adicionar;
-    }
 }
