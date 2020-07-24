@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    @Query("select id from Item i where i.nome = :nome")
+    @Query("select i.id from Item i where i.nome = :nome")
     List<Item> findByNome(@Param("nome") String nome);
 
 }

@@ -11,8 +11,7 @@ import java.util.List;
 @Repository
 public interface HabilidadeRepository extends JpaRepository<Habilidade, Long> {
 
-
-    @Query("select id from Habilidade h where h.nome = :nome")
+    @Query("select h.id from Habilidade h where h.nome = :nome")
     List<Habilidade> findByNome(@Param("nome") String nome);
 
 }

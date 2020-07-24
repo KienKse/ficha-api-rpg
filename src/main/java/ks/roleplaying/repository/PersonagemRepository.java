@@ -22,11 +22,4 @@ public interface PersonagemRepository extends JpaRepository<Personagem, Long> {
             "WHERE i.id = p.id")
     Optional<List<Personagem>> findAllPersonagem();
 
-/*
-    @Query("SELECT p FROM Personagem p " +
-            "JOIN FETCH p.inventarioItens i ON p.id = i.idpersonagemfk " +
-            "JOIN FETCH p.habilidades h ON p.id = h.idpersonagemfk " +
-            "WHERE 1=1")
-    List<Personagem> findAllPersonagem();
-*/
 }
