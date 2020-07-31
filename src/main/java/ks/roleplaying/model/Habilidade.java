@@ -24,9 +24,6 @@ public class Habilidade {
     @Column(name = "ALCANCE")
     private String alcance;
 
-    @Column(name = "EFEITO")
-    private String efeito;
-
     @Column(name = "DURACAO")
     private String duracao;
 
@@ -40,11 +37,10 @@ public class Habilidade {
         /** Construtor Vazio */
     }
 
-    public Habilidade(String nome, String tempoExecucao, String alcance, String efeito, String duracao, Integer custo, String descricao) {
+    public Habilidade(String nome, String tempoExecucao, String alcance, String duracao, Integer custo, String descricao) {
         this.nome = nome;
         this.tempoExecucao = tempoExecucao;
         this.alcance = alcance;
-        this.efeito = efeito;
         this.duracao = duracao;
         this.custo = custo;
         this.descricao = descricao;
@@ -54,7 +50,6 @@ public class Habilidade {
         this.nome = request.nome;
         this.tempoExecucao = request.tempoExecucao;
         this.alcance = request.alcance;
-        this.efeito = request.efeito;
         this.duracao = request.duracao;
         this.custo = request.custo;
         this.descricao = request.descricao;
@@ -90,14 +85,6 @@ public class Habilidade {
 
     public void setAlcance(String alcance) {
         this.alcance = alcance;
-    }
-
-    public String getEfeito() {
-        return efeito;
-    }
-
-    public void setEfeito(String efeito) {
-        this.efeito = efeito;
     }
 
     public String getDuracao() {
