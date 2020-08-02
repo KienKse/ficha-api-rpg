@@ -1,5 +1,6 @@
 package ks.roleplaying.model;
 
+import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -25,20 +26,27 @@ public class Item {
     @Column(name = "PRECO")
     private BigDecimal preco;
 
+    @Column(name = "LORE")
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
+    private String lore;
+
     public Item() {
         /** Construtor Vazio */
     }
 
-    public Item(String nome, BigDecimal peso, BigDecimal preco) {
+    public Item(String nome, BigDecimal peso, BigDecimal preco, String lore) {
         this.nome = nome;
         this.peso = peso;
         this.preco = preco;
+        this.lore = lore;
     }
 
     public Item(Item request) {
         this.nome = request.nome;
         this.peso= request.peso;
         this.preco = request.preco;
+        this.lore = request.lore;
     }
 
     public Long getId() {
@@ -72,5 +80,12 @@ public class Item {
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
     }
-                                            
+
+    public String getLore() {
+        return lore;
+    }
+
+    public void setLore(String lore) {
+        this.lore = lore;
+    }
 }
