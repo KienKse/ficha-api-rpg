@@ -26,16 +26,16 @@ public class ItemService {
         return itemRepository.findAll();
     }
 
-    public Item addNewItemCarga(String nome, BigDecimal peso, BigDecimal preco) {
+    public Item addNewItemCarga(String nome, BigDecimal peso, BigDecimal preco, String lore) {
         Item item = getItemByNome(nome);
         //TODO: FIX REFATORAR
         if(item == null) {
-            return itemRepository.save(new Item(nome, peso, preco));
+            return itemRepository.save(new Item(nome, peso, preco, lore));
         }
         return null;
     }
 
-    public Item getItemById(Long itemId) {
+     public Item getItemById(Long itemId) {
         return itemRepository.findById(itemId)
                 .orElseThrow(() -> new ResourceNotFoundException("ITEM", "id", itemId));
     }
@@ -52,6 +52,11 @@ public class ItemService {
         Item item = getItemById(itemId);
 
         itemRepository.delete(item);
+    }
+
+    //TODO TESTE DEV
+    public void deleteAllItens() {
+        itemRepository.deleteAll();
     }
 
     public ResponseEntity<Object> updateItem(Item itemDetails, Long itemId) {

@@ -1,10 +1,9 @@
 package ks.roleplaying.service;
 
 import ks.roleplaying.controller.ResourceNotFoundException;
-import ks.roleplaying.enums.MoedaEnum;
-import ks.roleplaying.enums.TendenciaEnum;
 import ks.roleplaying.model.*;
-import ks.roleplaying.repository.*;
+import ks.roleplaying.repository.InventarioRepository;
+import ks.roleplaying.repository.PersonagemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,15 +45,14 @@ public class PersonagemService {
 
         //TODO: REMOVER TESTE
         if(itemService.getAll().size() < 1) {
-            itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN);
-            itemService.addNewItemCarga("Poção de MP", BigDecimal.TEN.add(BigDecimal.ONE), BigDecimal.TEN.add(BigDecimal.ONE));
+            itemService.addNewItemCarga("Poção de HP", BigDecimal.TEN, BigDecimal.TEN, "");
+            itemService.addNewItemCarga("Poção de MP", BigDecimal.TEN.add(BigDecimal.ONE), BigDecimal.TEN.add(BigDecimal.ONE), "");
         }
         if(habilidadeService.getAll().size() < 1) {
-            habilidadeService.addNewHabilidade(new Habilidade("Teste", "Instantaneo", "Um alvo",
-                    "testar as coisas", "2 turnos", 2, "testar"));
+            habilidadeService.addNewHabilidade(new Habilidade("Teste", "Instantaneo", "Um alvo", "2 turnos", 2, "testar"));
 
             habilidadeService.addNewHabilidade(new Habilidade("Teste Supremo", "1 turno", "Em area",
-                    "testar as coisas supremamente", "1 turnos", 5, "testar no modo hard"));
+                    "1 turnos", 5, "testar no modo hard"));
         }
 
         personagem.setInventarioItens(request.getInventarioItens());

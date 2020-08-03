@@ -60,11 +60,17 @@ public class HabilidadeController {
     @DeleteMapping("/{id}")
     @ApiOperation(value = "Deletar uma habilidade pelo ID")
     public @ResponseBody ResponseEntity<?> deleteHabilidade(@PathVariable(value = "id") Long habilidadeId) {
-//        Habilidade habilidade = habilidadeService.getHabilidadeById(habilidadeId);
         habilidadeService.deleteHabilidade(habilidadeId);
 
         return ResponseEntity.ok().build();
     }
+
+//    @DeleteMapping("/del")
+//    @ApiOperation(value = "Deletar todos os itens")
+//    public @ResponseBody ResponseEntity<?> deleteAllItem() {
+//        habilidadeService.deleteAllHabilidade();
+//        return ResponseEntity.ok().build();
+//    }
 
     @PutMapping("/upd/{id}")
     @ApiOperation(value = "Atualizar uma habilidade pelo ID")

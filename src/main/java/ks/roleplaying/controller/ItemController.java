@@ -35,7 +35,7 @@ public class ItemController {
     @ApiOperation(value = "Adicionar um item")
     public ResponseEntity addNewItem(@Valid @RequestBody Item request) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(itemService.addNewItemCarga(request.getNome(), request.getPeso(), request.getPreco()));
+            return ResponseEntity.status(HttpStatus.OK).body(itemService.addNewItemCarga(request.getNome(), request.getPeso(), request.getPreco(), request.getLore()));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -49,7 +49,7 @@ public class ItemController {
 
     private void adicionarItens(Item item) {
         try {
-             this.itemService.addNewItemCarga(item.getNome(), item.getPeso(), item.getPreco());
+             this.itemService.addNewItemCarga(item.getNome(), item.getPeso(), item.getPreco(), item.getLore());
         } catch (Exception e) {
             System.out.println("Exceção: " + e.getLocalizedMessage());
         }
@@ -66,11 +66,17 @@ public class ItemController {
     @ApiOperation(value = "Deletar um item pelo ID")
     public @ResponseBody
     ResponseEntity<?> deleteItem(@PathVariable(value = "id") Long itemId) {
-//        Item item = itemService.getItemById(itemId);
         itemService.deleteItem(itemId);
 
         return ResponseEntity.ok().build();
     }
+
+//    @DeleteMapping("/del")
+//    @ApiOperation(value = "Deletar todos os itens")
+//    public @ResponseBody ResponseEntity<?> deleteAllItem() {
+//        itemService.deleteAllItens();
+//        return ResponseEntity.ok().build();
+//    }
 
     @PutMapping("/upd/{id}")
     @ApiOperation(value = "Atualizar um item pelo ID")

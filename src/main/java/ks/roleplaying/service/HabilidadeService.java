@@ -54,6 +54,10 @@ public class HabilidadeService {
         habilidadeRepository.delete(habilidade);
     }
 
+//    public void deleteAllHabilidade() {
+//        habilidadeRepository.deleteAll();
+//    }
+
     public ResponseEntity<Object> updateHabilidade(Habilidade habilidadeDetails, Long habilidadeId) {
         Optional<Habilidade> habilidadeOptional = habilidadeRepository.findById(habilidadeId);
 
