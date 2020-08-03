@@ -54,10 +54,10 @@ public class ItemService {
         itemRepository.delete(item);
     }
 
-    //TODO TESTE DEV
-    public void deleteAllItens() {
-        itemRepository.deleteAll();
-    }
+//    //TODO TESTE DEV
+//    public void deleteAllItens() {
+//        itemRepository.deleteAll();
+//    }
 
     public ResponseEntity<Object> updateItem(Item itemDetails, Long itemId) {
         Optional<Item> itemOptional = itemRepository.findById(itemId);

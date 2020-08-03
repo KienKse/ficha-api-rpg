@@ -9,4 +9,5 @@ public class RoleplayingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RoleplayingApplication.class, args);
 	}
+
 }

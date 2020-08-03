@@ -41,6 +41,7 @@ public class PersonagemService {
 
     @Transactional
     public Personagem addNewPersonagem(Personagem request) {
+        /*
         Personagem personagem = new Personagem(request);
 
         //TODO: REMOVER TESTE
@@ -71,6 +72,8 @@ public class PersonagemService {
         personagem.setAtributos(atributos);
 
         return personagemRepository.save(personagem);
+         */
+        return null;
     }
 
     private void verificarHabilidades(Personagem personagem, List<Habilidade> habilidades) {
