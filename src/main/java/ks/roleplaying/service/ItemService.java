@@ -28,9 +28,16 @@ public class ItemService {
 
     public Item addNewItemCarga(String nome, BigDecimal peso, BigDecimal preco, String lore) {
         Item item = getItemByNome(nome);
-        //TODO: FIX REFATORAR
         if(item == null) {
             return itemRepository.save(new Item(nome, peso, preco, lore));
+        }
+        return null;
+    }
+
+    public Item add(Item request) {
+        Item item = getItemByNome(request.getNome());
+        if(item == null) {
+            return itemRepository.save(new Item(request));
         }
         return null;
     }

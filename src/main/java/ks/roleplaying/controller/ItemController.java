@@ -36,7 +36,7 @@ public class ItemController {
     @ApiOperation(value = "Adicionar um item", authorizations = @Authorization(value = "Bearer"))
     public ResponseEntity addNewItem(@Valid @RequestBody Item request) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(itemService.addNewItemCarga(request.getNome(), request.getPeso(), request.getPreco(), request.getLore()));
+            return ResponseEntity.status(HttpStatus.OK).body(itemService.add(request));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

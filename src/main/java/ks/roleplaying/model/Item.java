@@ -31,6 +31,9 @@ public class Item {
     @Type(type = "org.hibernate.type.TextType")
     private String lore;
 
+    @Column(name = "user")
+    private String user;
+
     public Item() {
         /** Construtor Vazio */
     }
@@ -47,6 +50,7 @@ public class Item {
         this.peso= request.peso;
         this.preco = request.preco;
         this.lore = request.lore;
+        this.user = request.user;
     }
 
     public Long getId() {
@@ -87,5 +91,13 @@ public class Item {
 
     public void setLore(String lore) {
         this.lore = lore;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

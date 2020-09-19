@@ -39,7 +39,7 @@ public class AuthenticationController {
 	@Autowired
 	private UserDetailsService userDetailsService;
 
-	@PostMapping()
+	@PostMapping("/auth")
 	@ApiOperation("Autenticar")
 	public ResponseEntity<TokenDto> gerarTokenJwt(@Valid @RequestBody JwtAuthenticationDto authenticationDto) throws AuthenticationException {
 

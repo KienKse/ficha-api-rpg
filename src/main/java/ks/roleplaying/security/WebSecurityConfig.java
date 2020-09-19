@@ -1,6 +1,5 @@
 package ks.roleplaying.security;
 
-import ks.roleplaying.security.JwtAuthenticationEntryPoint;
 import ks.roleplaying.security.filters.JwtAuthenticationTokenFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -59,6 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authorizeRequests()
 				.antMatchers(
 						"/login",
+						"/api/login/auth",
+						"/login/auth",
+						"/api/login/",
 						"/v2/api-docs",
 						"/configuration/ui",
 						"/swagger-resources/**",

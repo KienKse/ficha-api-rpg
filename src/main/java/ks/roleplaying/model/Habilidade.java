@@ -33,6 +33,9 @@ public class Habilidade {
     @Column(name = "DESCRICAO", nullable = false)
     private String descricao;
 
+    @Column(name = "user")
+    private String user;
+
     public Habilidade() {
         /** Construtor Vazio */
     }
@@ -53,6 +56,7 @@ public class Habilidade {
         this.duracao = request.duracao;
         this.custo = request.custo;
         this.descricao = request.descricao;
+        this.user = request.user;
     }
 
     public Long getId() {
@@ -109,5 +113,13 @@ public class Habilidade {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }
