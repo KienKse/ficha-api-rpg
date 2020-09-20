@@ -2,6 +2,7 @@ package ks.roleplaying.service;
 
 import ks.roleplaying.model.Usuario;
 import ks.roleplaying.repository.UsuarioRepository;
+import ks.roleplaying.security.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,10 @@ public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    public Usuario save(Usuario request) {
+        return usuarioRepository.save(new Usuario(request.getLogin(), PasswordUtils.gerarBCrypt(request.getSenha())));
+    }
 
     public List<Usuario> getAll() {
         return usuarioRepository.findAll();
@@ -28,8 +33,6 @@ public class UsuarioService {
     }
 
     public void deleteById(Long id) {
-//        Usuario usuario = getById(id);
-//        userRepository.delete(usuario);
         usuarioRepository.deleteById(id);
     }
     

@@ -17,7 +17,7 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'ks.roleplaying;'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-SNAPSHOT'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -27,8 +27,6 @@ repositories {
 
 dependencies {
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-//	compile group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
-
 	compile group: 'com.h2database', name: 'h2', version: '1.4.199'
 	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.17'
 	compile('io.springfox:springfox-swagger2:2.9.2')

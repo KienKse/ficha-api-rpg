@@ -18,12 +18,4 @@ public class RoleplayingApplication {
 		SpringApplication.run(RoleplayingApplication.class, args);
 	}
 
-	@EventListener(ApplicationReadyEvent.class)
-	public void event() {
-		Usuario usuario = usuarioRepository.findByLogin("123");
-		if(usuario == null) {
-			usuarioRepository.save(new Usuario("123","$2a$10$/AxDFOm8OWS1wcDAwxs2GO1RIzd.TjCQdMNy2RPtibaL/Z6XIwrEO"));
-		}
-	}
-
 }
