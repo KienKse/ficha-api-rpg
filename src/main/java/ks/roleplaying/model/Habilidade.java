@@ -15,7 +15,7 @@ public class Habilidade {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NOME", unique = true, nullable = false)
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
     @Column(name = "TEMPO_EXECUCAO")
@@ -33,7 +33,7 @@ public class Habilidade {
     @Column(name = "DESCRICAO", nullable = false)
     private String descricao;
 
-    @Column(name = "user")
+    @Column(name = "usuario")
     private String user;
 
     public Habilidade() {

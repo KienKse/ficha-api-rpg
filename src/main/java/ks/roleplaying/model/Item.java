@@ -17,7 +17,7 @@ public class Item {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NOME", unique = true, nullable = false)
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
     @Column(name = "PESO", scale = 2, precision = 5, columnDefinition = "numrange")
@@ -31,7 +31,7 @@ public class Item {
     @Type(type = "org.hibernate.type.TextType")
     private String lore;
 
-    @Column(name = "user")
+    @Column(name = "usuario")
     private String user;
 
     public Item() {
