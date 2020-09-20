@@ -60,6 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 						"/login",
 						"/api/login/auth",
 						"/api/usuario/add",
+						"/api/usuario/del",
 						"/login/auth",
 						"/api/login/",
 						"/v2/api-docs",
