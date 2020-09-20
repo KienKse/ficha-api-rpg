@@ -27,7 +27,7 @@ public class Habilidade {
     @Column(name = "DURACAO")
     private String duracao;
 
-    @Column(name = "CUSTO")
+    @Column(name = "CUSTO", columnDefinition = "int4range")
     private Integer custo;
 
     @Column(name = "DESCRICAO", nullable = false)

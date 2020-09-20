@@ -20,10 +20,10 @@ public class Item {
     @Column(name = "NOME", unique = true, nullable = false)
     private String nome;
 
-    @Column(name = "PESO")
+    @Column(name = "PESO", scale = 2, precision = 5, columnDefinition = "numrange")
     private BigDecimal peso;
 
-    @Column(name = "PRECO")
+    @Column(name = "PRECO", scale = 2, precision = 5, columnDefinition = "numrange")
     private BigDecimal preco;
 
     @Column(name = "LORE")
