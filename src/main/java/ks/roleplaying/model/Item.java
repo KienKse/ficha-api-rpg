@@ -7,8 +7,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ITEM", schema = "rpg", uniqueConstraints=@UniqueConstraint(columnNames="NOME"))
-//@Table(name = "ITEM")
+//@Table(name = "ITEM", schema = "rpg")
+@Table(name = "ITEM")
 @EntityListeners(AuditingEntityListener.class)
 public class Item {
 
@@ -17,19 +17,22 @@ public class Item {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NOME", unique = true, nullable = false)
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
-    @Column(name = "PESO")
+    @Column(name = "PESO", scale = 2, precision = 5, columnDefinition = "numrange")
     private BigDecimal peso;
 
-    @Column(name = "PRECO")
+    @Column(name = "PRECO", scale = 2, precision = 5, columnDefinition = "numrange")
     private BigDecimal preco;
 
     @Column(name = "LORE")
     @Lob
     @Type(type = "org.hibernate.type.TextType")
     private String lore;
+
+    @Column(name = "usuario")
+    private String user;
 
     public Item() {
         /** Construtor Vazio */
@@ -47,6 +50,7 @@ public class Item {
         this.peso= request.peso;
         this.preco = request.preco;
         this.lore = request.lore;
+        this.user = request.user;
     }
 
     public Long getId() {
@@ -87,5 +91,13 @@ public class Item {
 
     public void setLore(String lore) {
         this.lore = lore;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

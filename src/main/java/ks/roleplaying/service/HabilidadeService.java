@@ -72,6 +72,4 @@ public class HabilidadeService {
         return ResponseEntity.noContent().build();
     }
 
-
-
 }

@@ -5,8 +5,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "HABILIDADE", schema = "rpg", uniqueConstraints=@UniqueConstraint(columnNames={"NOME"}))
-//@Table(name = "HABILIDADE")
+//@Table(name = "HABILIDADE", schema = "rpg", uniqueConstraints=@UniqueConstraint(columnNames={"NOME"}))
+@Table(name = "HABILIDADE")
 @EntityListeners(AuditingEntityListener.class)
 public class Habilidade {
 
@@ -15,7 +15,7 @@ public class Habilidade {
     @Column(name = "ID", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "NOME", unique = true, nullable = false)
+    @Column(name = "NOME", nullable = false)
     private String nome;
 
     @Column(name = "TEMPO_EXECUCAO")
@@ -27,11 +27,14 @@ public class Habilidade {
     @Column(name = "DURACAO")
     private String duracao;
 
-    @Column(name = "CUSTO")
+    @Column(name = "CUSTO", columnDefinition = "int4range")
     private Integer custo;
 
     @Column(name = "DESCRICAO", nullable = false)
     private String descricao;
+
+    @Column(name = "usuario")
+    private String user;
 
     public Habilidade() {
         /** Construtor Vazio */
@@ -53,6 +56,7 @@ public class Habilidade {
         this.duracao = request.duracao;
         this.custo = request.custo;
         this.descricao = request.descricao;
+        this.user = request.user;
     }
 
     public Long getId() {
@@ -109,5 +113,13 @@ public class Habilidade {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
     }
 }

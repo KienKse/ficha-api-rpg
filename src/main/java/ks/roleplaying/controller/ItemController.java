@@ -2,12 +2,9 @@ package ks.roleplaying.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import ks.roleplaying.model.InventarioItem;
+import io.swagger.annotations.Authorization;
 import ks.roleplaying.model.Item;
-import ks.roleplaying.model.Personagem;
-import ks.roleplaying.repository.InventarioRepository;
 import ks.roleplaying.service.ItemService;
-import ks.roleplaying.service.PersonagemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,16 +23,16 @@ public class ItemController {
     private ItemService itemService;
 
     @GetMapping("")
-    @ApiOperation(value = "Obter todos os itens ")
+    @ApiOperation(value = "Obter todos os itens ", authorizations = @Authorization(value = "Bearer"))
     public List<Item> getAll() {
         return itemService.getAll();
     }
 
     @PostMapping("/add")
-    @ApiOperation(value = "Adicionar um item")
+    @ApiOperation(value = "Adicionar um item", authorizations = @Authorization(value = "Bearer"))
     public ResponseEntity addNewItem(@Valid @RequestBody Item request) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(itemService.addNewItemCarga(request.getNome(), request.getPeso(), request.getPreco(), request.getLore()));
+            return ResponseEntity.status(HttpStatus.OK).body(itemService.add(request));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
